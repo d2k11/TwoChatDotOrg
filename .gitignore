@@ -1,0 +1,82 @@
+# Ignore the .sln file at the root level
+*.sln
+
+# Ignore Rider project files
+.idea/
+*.sln.iml
+
+# Ignore .NET build results
+[Dd]ebug/
+[Rr]elease/
+x64/
+x86/
+[Aa]ssets/
+
+# Ignore Visual Studio Code workspace files
+.vscode/
+
+# Ignore build outputs
+**/bin/
+**/obj/
+**/Debug/
+**/Release/
+
+# Ignore Rider specific files
+.idea/
+*.sln.iml
+*.DotSettings.user
+
+# Ignore macOS specific files
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Ignore temporary files
+._*
+.Spotlight-V100
+.Trashes
+*.swp
+*.lock
+*.log
+*.tmp
+*.bak
+*.old
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Ignore NuGet packages
+*.nupkg
+*.snupkg
+.nuget/
+packages/
+# Uncomment if necessary for project-specific NuGet setup
+# **/packages/
+
+# Ignore build artifacts
+project.lock.json
+project.fragment.lock.json
+artifacts/
+
+# Ignore coverage results
+coverage/
+*.coverage
+*.coveragexml
+*.log
+*.TestResults
+TestResults/
+
+# Ignore publish directory
+wwwroot/
+
+# Ignore user specific files
+.vscode/
+*.user
+*.userosscache
+*.suo
+*.sln.docstates
+
+# Ignore JetBrains Rider caches
+.idea/
+*.sln.iml
