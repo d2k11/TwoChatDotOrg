@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwoChatRedux", "TwoChatRedux\TwoChatRedux.csproj", "{66AEC67F-7A08-4D78-92B3-8BF6123BFA55}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TwoChatRedux.API", "TwoChatRedux.API\TwoChatRedux.API.csproj", "{7DE19A7E-50A1-4997-B331-0BE8AE7D528E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{66AEC67F-7A08-4D78-92B3-8BF6123BFA55}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{66AEC67F-7A08-4D78-92B3-8BF6123BFA55}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{66AEC67F-7A08-4D78-92B3-8BF6123BFA55}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{66AEC67F-7A08-4D78-92B3-8BF6123BFA55}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7DE19A7E-50A1-4997-B331-0BE8AE7D528E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7DE19A7E-50A1-4997-B331-0BE8AE7D528E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7DE19A7E-50A1-4997-B331-0BE8AE7D528E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7DE19A7E-50A1-4997-B331-0BE8AE7D528E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
