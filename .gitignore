@@ -80,3 +80,27 @@ wwwroot/
 # Ignore JetBrains Rider caches
 .idea/
 *.sln.iml
+.idea/.idea.TwoChatRedux/.idea/vcs.xml
+TwoChatRedux.API/obj/Debug/net8.0/TwoChatRedux.API.AssemblyInfo.cs
+TwoChatRedux.API/obj/Debug/net8.0/TwoChatRedux.API.AssemblyInfoInputs.cache
+TwoChatRedux.API/obj/Debug/net8.0/TwoChatRedux.API.assets.cache
+TwoChatRedux.API/obj/Debug/net8.0/TwoChatRedux.API.csproj.AssemblyReference.cache
+TwoChatRedux.API/obj/Debug/net8.0/TwoChatRedux.API.GeneratedMSBuildEditorConfig.editorconfig
+TwoChatRedux.API/obj/project.assets.json
+TwoChatRedux.API/obj/project.nuget.cache
+TwoChatRedux.API/obj/project.packagespec.json
+TwoChatRedux.API/obj/rider.project.restore.info
+TwoChatRedux.API/obj/TwoChatRedux.API.csproj.nuget.dgspec.json
+TwoChatRedux.API/obj/TwoChatRedux.API.csproj.nuget.g.props
+TwoChatRedux.sln.DotSettings.user
+TwoChatRedux/obj/Debug/net8.0/TwoChatRedux.AssemblyInfo.cs
+TwoChatRedux/obj/Debug/net8.0/TwoChatRedux.AssemblyInfoInputs.cache
+TwoChatRedux/obj/Debug/net8.0/TwoChatRedux.assets.cache
+TwoChatRedux/obj/Debug/net8.0/TwoChatRedux.csproj.AssemblyReference.cache
+TwoChatRedux/obj/Debug/net8.0/TwoChatRedux.GeneratedMSBuildEditorConfig.editorconfig
+TwoChatRedux/obj/project.assets.json
+TwoChatRedux/obj/project.nuget.cache
+TwoChatRedux/obj/project.packagespec.json
+TwoChatRedux/obj/rider.project.restore.info
+TwoChatRedux/obj/TwoChatRedux.csproj.nuget.dgspec.json
+TwoChatRedux/obj/TwoChatRedux.csproj.nuget.g.props
