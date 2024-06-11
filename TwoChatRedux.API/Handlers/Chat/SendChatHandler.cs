@@ -1,11 +1,12 @@
-using AstroFramework.Models.Responses;
+using System.Text.Json;
 using AstroFramework.Objects;
 using TwoChatRedux.API.Models;
+using TwoChatRedux.API.Models.Message;
 using TwoChatRedux.API.Systems;
 
 namespace TwoChatRedux.API.Handlers.User;
 
-public class GetUserHandler : AstroHandler
+public class SendChatHandler : AstroHandler
 {
     public override async Task<object> Handle(HttpRequest request)
     {
@@ -27,6 +28,13 @@ public class GetUserHandler : AstroHandler
             return Fail("User is banned.");
         }
 
-        return user;
+        user.session.messages.sent_session++;
+        user.session.messages.sent_second++;
+        user.session.messages.sent_minute++;
+        user.session.messages.sent_hour++;
+        
+        ChatMessage body = JsonSerializer.Deserialize<ChatMessage>(Request.Body);
+        ChatMessage returned = ChatManager.Add(user, body.channel, body.content);
+        return returned;
     }
 }

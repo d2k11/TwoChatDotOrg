@@ -1,3 +1,5 @@
+using TwoChatRedux.API.Models.Channel;
+
 namespace TwoChatRedux.API.Models;
 
 public class ChatUser

@@ -19,4 +19,9 @@ public class ChatChannel
     /// The display name of the channel.
     /// </summary>
     public string display { get; set; } = string.Empty; // like "minecraft"
+
+    /// <summary>
+    /// If this is a public channel that should be displayed in the channel list.
+    /// </summary>
+    public bool isPublic { get; set; } = true;
 }

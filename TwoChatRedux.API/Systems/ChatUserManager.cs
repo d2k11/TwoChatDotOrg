@@ -11,7 +11,67 @@ public class ChatUserManager
     /// <summary>
     /// All chat users currently connected to the server.
     /// </summary>
-    public static List<ChatUser> Users = new();
+    public static List<ChatUser> Users { get; set; } = new();
+
+    public static void UserManagerMonitor()
+    {
+        while (true)
+        {
+            List<ChatUser> updates = new();
+            List<ChatUser> removals = new();
+            
+            foreach (ChatUser user in Users)
+            {
+                bool remove = false;
+                
+                if (user.flags.banned.active && user.flags.banned.expiry < DateTime.Now)
+                {
+                    user.flags.banned.active = false;
+                }
+
+                if (user.flags.typing.active && user.flags.typing.expiry < DateTime.Now)
+                {
+                    user.flags.typing.active = false;
+                }
+
+                if (user.session.expiry < DateTime.Now || user.flags.banned.active)
+                {
+                    remove = true;
+                }
+
+                TimeSpan elapsedSecond = DateTime.Now - user.session.messages.cleared_second;
+                TimeSpan elapsedMinute = DateTime.Now - user.session.messages.cleared_minute;
+                TimeSpan elapsedHour = DateTime.Now - user.session.messages.cleared_hour;
+                
+                if (elapsedSecond >= TimeSpan.FromSeconds(1))
+                {
+                    user.session.messages.sent_second = 0;
+                    user.session.messages.cleared_second = DateTime.Now;
+                }
+
+                if (elapsedMinute >= TimeSpan.FromMinutes(1))
+                {
+                    user.session.messages.sent_minute = 0;
+                    user.session.messages.cleared_minute = DateTime.Now;
+                }
+
+                if (elapsedHour >= TimeSpan.FromHours(1))
+                {
+                    user.session.messages.sent_hour = 0;
+                    user.session.messages.cleared_hour = DateTime.Now;
+                }
+                
+                user.session.lastPeriodicUpdate = DateTime.Now;
+
+                if (!remove)
+                {
+                    updates.Add(user);
+                }
+            }
+
+            Users = updates;
+        }
+    }
 
     /// <summary>
     /// Get all chat users.
@@ -38,12 +98,16 @@ public class ChatUserManager
     /// <param name="hash">The hash to match.</param>
     /// <param name="user">The user to upload.</param>
     /// <returns>The modified user.</returns>
-    public static ChatUser Put(string hash, ChatUser user)
+    public static ChatUser Put(string hash, ChatUser user, bool bypassWrite = false)
     {
         Users.Remove(Find(hash));
         Users.Add(user);
-        if(!Directory.Exists("users")) Directory.CreateDirectory("users");
-        File.WriteAllText("users/"+hash+".json", JsonSerializer.Serialize(user));
+        if (!bypassWrite)
+        {
+            if (!Directory.Exists("users")) Directory.CreateDirectory("users");
+            File.WriteAllText("users/" + hash + ".json", JsonSerializer.Serialize(user));
+        }
+
         return Find(hash);
     }
 
@@ -58,7 +122,15 @@ public class ChatUserManager
         if (user is null)
         {
             user = File.Exists("users/"+hash+".json") ? JsonSerializer.Deserialize<ChatUser>(File.ReadAllText("users/"+hash+".json")) : null;
-            if(user is not null) { user.session = ChatSessionManager.Add(hash); }
+            if (user is not null)
+            {
+                ChatUserSession? session = ChatSessionManager.Get(hash);
+                user.session = session == null || session.expiry < DateTime.Now
+                    ? ChatSessionManager.Add(hash)
+                    : session;
+                Users.Remove(user);
+                Users.Add(user);
+            }
         }
         return user;
     }
@@ -77,7 +149,10 @@ public class ChatUserManager
         if(File.Exists("users/"+hash+".json"))
         {
             ChatUser savedUser = JsonSerializer.Deserialize<ChatUser>(File.ReadAllText("users/"+hash+".json"));
-            savedUser.session = new();
+            ChatUserSession? session = ChatSessionManager.Get(savedUser.hash);
+            savedUser.session = session == null || session.expiry < DateTime.Now 
+                ? ChatSessionManager.Add(hash) : session;
+
             return Put(hash, savedUser);
         }
         

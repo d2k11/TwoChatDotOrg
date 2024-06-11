@@ -1,11 +1,10 @@
-using AstroFramework.Models.Responses;
 using AstroFramework.Objects;
 using TwoChatRedux.API.Models;
 using TwoChatRedux.API.Systems;
 
-namespace TwoChatRedux.API.Handlers.User;
+namespace TwoChatRedux.API.Handlers.User.Properties;
 
-public class GetUserHandler : AstroHandler
+public class UserMessageDataHandler : AstroHandler
 {
     public override async Task<object> Handle(HttpRequest request)
     {
@@ -14,19 +13,20 @@ public class GetUserHandler : AstroHandler
         string ip = Request.IpAddress.ToString();
         
         if(!(ip.Equals("127.0.0.1") || ip.Equals("::1") || ip.Equals("localhost"))) return Fail("Unauthorized");
-        if (!Request.Query.ContainsKey("hash")) return Fail("Missing hash parameter.");
+        if (!Request.Query.ContainsKey("hash")) return Fail("Missing hash parameter");
         
-        ChatUser? user = ChatUserManager.Find(Request.Query["hash"]);
-        if (user is null || (user is not null && user.session.expiry < DateTime.Now))
+        string hash = Request.Query["hash"];
+        ChatUser? user = ChatUserManager.Find(hash);
+        if (user is null)
         {
-            user = ChatUserManager.Add(Request.Query["hash"]);
+            return Fail("User not found.");
         }
-
+        
         if (user.flags.banned.active)
         {
             return Fail("User is banned.");
         }
 
-        return user;
+        return user.session.messages;
     }
 }

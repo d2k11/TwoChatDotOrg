@@ -3,16 +3,16 @@ using AstroFramework.Objects;
 using TwoChatRedux.API.Models;
 using TwoChatRedux.API.Systems;
 
-namespace TwoChatRedux.API.Handlers.User;
+namespace TwoChatRedux.API.Handlers;
 
-public class PutUserSettingsHandler : AstroHandler
+public class PutSessionSettingsHandler : AstroHandler
 {
     public override async Task<object> Handle(HttpRequest request)
     {
         Initialize(request);
         
         string ip = Request.IpAddress.ToString();
-        ChatUserSettings body = JsonSerializer.Deserialize<ChatUserSettings>(Request.Body);
+        ChatUserSessionSettings body = JsonSerializer.Deserialize<ChatUserSessionSettings>(Request.Body);
         
         if(!(ip.Equals("127.0.0.1") || ip.Equals("::1") || ip.Equals("localhost"))) return Fail("Unauthorized");
         if (!Request.Query.ContainsKey("hash")) return Fail("Missing hash parameter.");
@@ -23,7 +23,12 @@ public class PutUserSettingsHandler : AstroHandler
             return Fail("User not found.");
         }
         
-        user.settings = body;
-        return ChatUserManager.Put(Request.Query["hash"], user);
+        if (user.flags.banned.active)
+        {
+            return Fail("User is banned.");
+        }
+        
+        user.session.settings = body;
+        return ChatUserManager.Put(Request.Query["hash"], user, true);
     }
 }
