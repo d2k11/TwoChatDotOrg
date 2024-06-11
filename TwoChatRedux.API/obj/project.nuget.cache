@@ -1,16 +1,16 @@
 {
   "version": 2,
-  "dgSpecHash": "9oN3qHCKQ4dsRJWURH2psa0kr1u6aaGdHct23MO4aL2ybrBt6D05iD0SceIuksK88OXjKKRUNaDxmq66HL2Y3w==",
+  "dgSpecHash": "79mSqVYlhkEWxezK6PO70XHT0WpJr9v6JI38BINl7jZXDyDSXkhlVLuKWfLk5RYnHr2NCuDNcffEmYX+BPyjgw==",
   "success": true,
-  "projectFilePath": "/Users/gcurtiss/source/TwoChatRedux/TwoChatRedux.API/TwoChatRedux.API.csproj",
+  "projectFilePath": "/Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux.API/TwoChatRedux.API.csproj",
   "expectedPackageFiles": [
-    "/Users/gcurtiss/.nuget/packages/microsoft.aspnetcore.openapi/8.0.2/microsoft.aspnetcore.openapi.8.0.2.nupkg.sha512",
-    "/Users/gcurtiss/.nuget/packages/microsoft.extensions.apidescription.server/6.0.5/microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
-    "/Users/gcurtiss/.nuget/packages/microsoft.openapi/1.4.3/microsoft.openapi.1.4.3.nupkg.sha512",
-    "/Users/gcurtiss/.nuget/packages/swashbuckle.aspnetcore/6.4.0/swashbuckle.aspnetcore.6.4.0.nupkg.sha512",
-    "/Users/gcurtiss/.nuget/packages/swashbuckle.aspnetcore.swagger/6.4.0/swashbuckle.aspnetcore.swagger.6.4.0.nupkg.sha512",
-    "/Users/gcurtiss/.nuget/packages/swashbuckle.aspnetcore.swaggergen/6.4.0/swashbuckle.aspnetcore.swaggergen.6.4.0.nupkg.sha512",
-    "/Users/gcurtiss/.nuget/packages/swashbuckle.aspnetcore.swaggerui/6.4.0/swashbuckle.aspnetcore.swaggerui.6.4.0.nupkg.sha512"
+    "/Users/gabrielcurtiss/.nuget/packages/microsoft.aspnetcore.openapi/8.0.2/microsoft.aspnetcore.openapi.8.0.2.nupkg.sha512",
+    "/Users/gabrielcurtiss/.nuget/packages/microsoft.extensions.apidescription.server/6.0.5/microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
+    "/Users/gabrielcurtiss/.nuget/packages/microsoft.openapi/1.4.3/microsoft.openapi.1.4.3.nupkg.sha512",
+    "/Users/gabrielcurtiss/.nuget/packages/swashbuckle.aspnetcore/6.4.0/swashbuckle.aspnetcore.6.4.0.nupkg.sha512",
+    "/Users/gabrielcurtiss/.nuget/packages/swashbuckle.aspnetcore.swagger/6.4.0/swashbuckle.aspnetcore.swagger.6.4.0.nupkg.sha512",
+    "/Users/gabrielcurtiss/.nuget/packages/swashbuckle.aspnetcore.swaggergen/6.4.0/swashbuckle.aspnetcore.swaggergen.6.4.0.nupkg.sha512",
+    "/Users/gabrielcurtiss/.nuget/packages/swashbuckle.aspnetcore.swaggerui/6.4.0/swashbuckle.aspnetcore.swaggerui.6.4.0.nupkg.sha512"
   ],
   "logs": []
 }
