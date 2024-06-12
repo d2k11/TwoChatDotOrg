@@ -31,6 +31,7 @@ router.AddRoute("/v2/status", AstroHttpMethod.GET, new ServerResponseHandler());
 
 // /v2/user
 router.AddRoute("/v2/user/get", AstroHttpMethod.GET, new GetUserHandler());
+router.AddRoute("/v2/user/all", AstroHttpMethod.GET, new GetAllUsersHandler());
 router.AddRoute("/v2/user/hash", AstroHttpMethod.GET, new GetHashHandler());
 router.AddRoute("/v2/user/set", AstroHttpMethod.POST, new PutUserSettingsHandler());
 router.AddRoute("/v2/user/session", AstroHttpMethod.POST, new PutSessionSettingsHandler());
@@ -46,6 +47,7 @@ router.AddRoute("/v2/chat/delete", AstroHttpMethod.GET, new DeleteChatHandler())
 router.AddRoute("/v2/chat/latest", AstroHttpMethod.GET, new GetLatestChatHandler());
 router.AddRoute("/v2/chat/all", AstroHttpMethod.GET, new GetAllChatsHandler());
 router.AddRoute("/v2/chat/channel", AstroHttpMethod.GET, new GetAllChannelChatsHandler());
+router.AddRoute("/v2/chat/view", AstroHttpMethod.GET, new AddViewHandler());
 
 // /v2/channel
 router.AddRoute("/v2/channel/get", AstroHttpMethod.GET, new GetChannelHandler());

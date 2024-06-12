@@ -14,6 +14,11 @@ public class ChatMessage
     /// The channel this message was sent in.
     /// </summary>
     public string channel { get; set; } = string.Empty;
+
+    /// <summary>
+    /// The time in which this message was sent.
+    /// </summary>
+    public DateTime timestamp { get; set; } = DateTime.Now;
     
     /// <summary>
     /// The user that sent this message.

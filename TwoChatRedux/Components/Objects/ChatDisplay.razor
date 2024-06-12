@@ -1,0 +1,58 @@
+@using TwoChatRedux.API.Models
+@using TwoChatRedux.API.Models.Message
+
+@if (!Mobile)
+{
+    <MudPaper Style="@Style()" Class="mt-2">
+        <MudStack Row>
+            <MudAvatar Size="Size.Medium" Color="Color.Primary" Class="ml-4 mt-4">
+                @Message.header.Substring(0, 1)
+            </MudAvatar>
+            <div class="d-flex flex-column ml-2">
+                <div class="d-flex" style="width: 35vw; word-wrap: anywhere">
+                    <MudStack Spacing="0">
+                        <h3 class="pt-4">@Message.header</h3>
+                        <sub class="pb-4">@Message.timestamp</sub>
+                        <p class="pb-4">
+                            @Message.content
+                        </p>
+                    </MudStack>
+                </div>
+                <MudStack Row Spacing="2" Class="mb-4">
+                    <MudIconButton Icon="@Icons.Material.Filled.ThumbUp" Size="Size.Small"></MudIconButton>
+                    <MudIconButton Icon="@Icons.Material.Filled.ThumbDown" Size="Size.Small"></MudIconButton>
+                    <MudIconButton Icon="@Icons.Material.Filled.ContentCopy" Size="Size.Small"></MudIconButton>
+                    <MudIconButton Icon="@Icons.Material.Filled.Announcement" Size="Size.Small"></MudIconButton>
+                </MudStack>
+            </div>
+        </MudStack>
+    </MudPaper>
+}
+else
+{
+    <MudPaper Style="@Style()" Class="mt-2">
+        <div style="word-wrap: anywhere; width: 35vw;">
+            <MudStack Spacing="0" Class="pa-2 pb-4">
+                <h4>@Message.header</h4>
+                <sub>@Message.timestamp</sub>
+            </MudStack>
+            <p class="pa-2 pb-4">@Message.content</p>
+        </div>
+        <MudStack Row Spacing="0" Class="pa-2 pb-4">
+            <MudIconButton Icon="@Icons.Material.Filled.ThumbUp" Size="Size.Small"></MudIconButton>
+            <MudIconButton Icon="@Icons.Material.Filled.ThumbDown" Size="Size.Small"></MudIconButton>
+            <MudIconButton Icon="@Icons.Material.Filled.ContentCopy" Size="Size.Small"></MudIconButton>
+            <MudIconButton Icon="@Icons.Material.Filled.Announcement" Size="Size.Small"></MudIconButton>
+        </MudStack>
+    </MudPaper>
+}
+
+@code {
+    [Parameter]
+    public ChatMessage Message { get; set; }
+    
+    [Parameter]
+    public ChatUser ViewingUser { get; set; }
+
+    [Parameter] public bool Mobile { get; set; } = false;
+}

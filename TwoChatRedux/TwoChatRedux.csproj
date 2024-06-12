@@ -8,7 +8,13 @@
 
 
     <ItemGroup>
+        <PackageReference Include="HtmlSanitizer" Version="8.1.866-beta" />
         <PackageReference Include="MudBlazor" Version="6.*"/>
+    </ItemGroup>
+
+
+    <ItemGroup>
+      <ProjectReference Include="..\TwoChatRedux.API\TwoChatRedux.API.csproj" />
     </ItemGroup>
 
 </Project>

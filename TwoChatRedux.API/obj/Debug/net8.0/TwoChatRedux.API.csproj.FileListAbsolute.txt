@@ -71,3 +71,6 @@
 /Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux.API/obj/Debug/net8.0/TwoChatRedux.API.pdb
 /Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux.API/obj/Debug/net8.0/TwoChatRedux.API.genruntimeconfig.cache
 /Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux.API/obj/Debug/net8.0/ref/TwoChatRedux.API.dll
+/Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux.API/bin/Debug/net8.0/users/AB416C39D509E72C5A0A7451A45BC65E.json
+/Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux.API/bin/Debug/net8.0/users/E5482C6614F24995D26FBDEA369E3C72.json
+/Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux.API/bin/Debug/net8.0/users/175F8339F551EADC8BF05F412220B82B.json

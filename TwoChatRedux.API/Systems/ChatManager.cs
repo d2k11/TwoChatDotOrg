@@ -141,6 +141,12 @@ public class ChatManager
         return msg;
     }
 
+    /// <summary>
+    /// Edit a chat message.
+    /// </summary>
+    /// <param name="id">The ID of the message to edit.</param>
+    /// <param name="message">The message to edit.</param>
+    /// <returns>The message as processed by the server.</returns>
     public static ChatMessage Put(int id, ChatMessage message)
     {
         Messages.Remove(Get(id));

@@ -1,5 +1,7 @@
 using TwoChatRedux.Components;
 using MudBlazor.Services;
+using TwoChatRedux.API.Systems;
+using TwoChatRedux.Systems;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -8,6 +10,7 @@ builder.Services.AddRazorComponents()
     .AddInteractiveServerComponents();
 
 builder.Services.AddMudServices();
+builder.Services.AddHttpContextAccessor();
 
 var app = builder.Build();
 
@@ -26,5 +29,12 @@ app.UseAntiforgery();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
+
+while (!ChatApiClient.GetServerStatus())
+{
+}
+
+new Thread(UserLoadProcess.UserUpdateProcess).Start();
+new Thread(ChatLoadProcess.ChatUpdateProcess).Start();
 
 app.Run();

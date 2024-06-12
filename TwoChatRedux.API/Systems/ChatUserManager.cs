@@ -11,7 +11,7 @@ public class ChatUserManager
     /// <summary>
     /// All chat users currently connected to the server.
     /// </summary>
-    public static List<ChatUser> Users { get; set; } = new();
+    public static List<ChatUser> Users = new();
 
     public static void UserManagerMonitor()
     {
@@ -19,11 +19,12 @@ public class ChatUserManager
         {
             List<ChatUser> updates = new();
             List<ChatUser> removals = new();
-            
-            foreach (ChatUser user in Users)
+
+            List<ChatUser> users = Users;
+            foreach (ChatUser user in users)
             {
                 bool remove = false;
-                
+
                 if (user.flags.banned.active && user.flags.banned.expiry < DateTime.Now)
                 {
                     user.flags.banned.active = false;
@@ -34,7 +35,8 @@ public class ChatUserManager
                     user.flags.typing.active = false;
                 }
 
-                if (user.session.expiry < DateTime.Now || user.flags.banned.active)
+                if (user.session.expiry < DateTime.Now ||
+                    (user.flags.banned.active && user.flags.banned.expiry > DateTime.Now))
                 {
                     remove = true;
                 }
@@ -42,7 +44,7 @@ public class ChatUserManager
                 TimeSpan elapsedSecond = DateTime.Now - user.session.messages.cleared_second;
                 TimeSpan elapsedMinute = DateTime.Now - user.session.messages.cleared_minute;
                 TimeSpan elapsedHour = DateTime.Now - user.session.messages.cleared_hour;
-                
+
                 if (elapsedSecond >= TimeSpan.FromSeconds(1))
                 {
                     user.session.messages.sent_second = 0;
@@ -60,7 +62,7 @@ public class ChatUserManager
                     user.session.messages.sent_hour = 0;
                     user.session.messages.cleared_hour = DateTime.Now;
                 }
-                
+
                 user.session.lastPeriodicUpdate = DateTime.Now;
 
                 if (!remove)
@@ -68,8 +70,9 @@ public class ChatUserManager
                     updates.Add(user);
                 }
             }
-
-            Users = updates;
+            
+            lock (Users) Users = updates;
+            Thread.Sleep(1000);
         }
     }
 

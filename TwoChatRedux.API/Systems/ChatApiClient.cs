@@ -50,6 +50,22 @@ public class ChatApiClient
     }
 
     /// <summary>
+    /// Get all online chat users.
+    /// </summary>
+    /// <returns>All online chat users.</returns>
+    public static List<ChatUser>? GetAllUsers()
+    {
+        try
+        {
+            return JsonSerializer.Deserialize<List<ChatUser>>(Get($"{Path}/user/all"));
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    /// <summary>
     /// Get the hash of an IP.
     /// </summary>
     /// <param name="ip">The IP to hash.</param>
@@ -222,6 +238,22 @@ public class ChatApiClient
     }
 
     /// <summary>
+    /// Get all channels.
+    /// </summary>
+    /// <returns>All channels.</returns>
+    public static async Task<List<ChatChannel>?> GetAllChannels()
+    {
+        try
+        {
+            return JsonSerializer.Deserialize<List<ChatChannel>>(Get($"{Path}/channel/all"));
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    /// <summary>
     /// Gets users in a channel.
     /// </summary>
     /// <param name="channel">The channel to get users in.</param>
@@ -284,6 +316,21 @@ public class ChatApiClient
         try
         {
             return JsonSerializer.Deserialize<ChatMessage>(Get($"{Path}/chat/delete?id={id}"));
+        }
+        catch
+        {
+            return null;
+        }
+    }
+    
+    /// <summary>
+    /// Get all messages.
+    /// </summary>
+    public static async Task<List<ChatMessage>?> GetAllMessages()
+    {
+        try
+        {
+            return JsonSerializer.Deserialize<List<ChatMessage>>(Get($"{Path}/chat/all"));
         }
         catch
         {

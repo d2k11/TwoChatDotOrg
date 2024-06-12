@@ -1,0 +1,118 @@
+@page "/c/{channel}"
+@using TwoChatRedux.API.Models
+@using TwoChatRedux.API.Models.Message
+@using TwoChatRedux.Systems
+
+@rendermode InteractiveServer
+
+@inject IHttpContextAccessor HttpContext;
+@inject ISnackbar Snackbar;
+
+<MyMudProviders></MyMudProviders>
+
+<style>
+    .chat {
+        overflow: auto;
+        display: flex;
+        flex-direction: column-reverse;
+        height: 75vh;
+    }
+    .toolbar {
+        height: 10vh;
+        width: 45vh;
+        margin: auto;
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.41);
+        box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+        backdrop-filter: blur(6.2px);
+        -webkit-backdrop-filter: blur(6.2px);
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 16px;
+    }
+    .chatInput {
+        border-radius: 4px;
+        border-color: #6200EE;
+        width: 90vw;
+        height: 8vh;
+        background-color: #27272f;
+        color: white;
+        font-size: 16px;
+    }
+</style>
+
+<ChatSettings User="@currentUser" Visible="@ui_settingsVisible"></ChatSettings>
+
+<!-- Floating Toolbar -->
+
+<MudBreakpointProvider>
+    <!-- Floating Toolbar -->
+    <div class="toolbar">
+
+        <!-- Navigation Icons -->
+
+        <MudStack Row Style="margin: auto" Spacing="0">
+            <MudIconButton Style="margin: auto" Color="Color.Primary" Icon="@Icons.Material.Filled.Settings" Size="Size.Medium"
+                           OnClick="@OpenSettings"></MudIconButton>
+            <MudIconButton Style="margin: auto" Color="Color.Primary" Icon="@Icons.Material.Filled.List" Size="Size.Medium"></MudIconButton>
+            <MudIconButton Style="margin: auto" Color="Color.Primary" Icon="@Icons.Material.Filled.People" Size="Size.Medium"></MudIconButton>
+        </MudStack>
+
+        <!-- Currently Talking In -->
+
+        <!-- Desktop -->
+        <MudHidden Breakpoint="Breakpoint.Xs">
+            <MudText Style="font-size: 14px;" Class="ml-4">
+                Currently Talking In: #@channel as
+                @(currentUser.session.settings.screenName == null ? 
+                    "Anonymous #" + currentUser.session.id 
+                    : currentUser.session.settings.screenName + " (#" + currentUser.session.id + ")")
+            </MudText>
+        </MudHidden>
+
+        <!-- Mobile -->
+        <MudHidden Breakpoint="Breakpoint.SmAndUp">
+            <MudText Style="font-size: 13px;" Class="ml-4">
+                Currently Talking In: #@channel as
+                @(currentUser.session.settings.screenName == null ?
+                    "Anonymous #" + currentUser.session.id 
+                    : currentUser.session.settings.screenName + " (#" + currentUser.session.id + ")")
+            </MudText>
+        </MudHidden>
+    </div>
+    
+    <!-- Chat Display -->
+    <div class="chat mb-4">
+        @foreach (ChatMessage message in ChatLoadProcess.GetChats())
+        {
+            <!-- Desktop -->
+            <MudHidden Breakpoint="Breakpoint.Xs">
+                <ChatDisplay Message="@message" ViewingUser="@currentUser"></ChatDisplay>
+            </MudHidden>
+
+            <!-- Mobile -->
+            <MudHidden Breakpoint="Breakpoint.SmAndUp">
+                <ChatDisplay Message="@message" ViewingUser="@currentUser" Mobile></ChatDisplay>
+            </MudHidden>
+        }
+    </div>
+    <!-- Chat Input -->
+    <MudStack Row>
+
+        <!-- Desktop -->
+        <MudHidden Breakpoint="Breakpoint.Xs">
+            <textarea type="text" class="chatInput" style="width: 93vw;" @bind="ui_textField" @bind:event="oninput" @onkeydown="@TextFieldKeyDown"></textarea>
+        </MudHidden>
+
+        <!-- Mobile -->
+        <MudHidden Breakpoint="Breakpoint.SmAndUp">
+            <textarea type="text" class="chatInput" @bind="ui_textField" @bind:event="oninput" @onkeydown="@TextFieldKeyDown"></textarea>
+        </MudHidden>
+
+        <MudIconButton Icon="@Icons.Material.Filled.Send" Size="Size.Medium" @onclick="@SendChat"></MudIconButton>
+    </MudStack>
+</MudBreakpointProvider>
+
+
+@code {
+    [Parameter] public string channel { get; set; }
+}

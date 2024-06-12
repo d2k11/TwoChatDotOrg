@@ -1,0 +1,25 @@
+@using TwoChatRedux.API.Models
+
+<MudBreakpointProvider>
+    <MudOverlay Visible="@Visible" DarkBackground Style="margin: auto">
+        <MudPaper Style="width: 75vw; height: 75vh; border: 1px solid #6200EE" Class="pa-4">
+            <div style="margin: auto">
+                <MudStack Spacing="1">
+                    <MudText Typo="Typo.h3">Settings</MudText>
+                    <MudText Typo="Typo.body1"><b>#@User.session.id</b></MudText>
+                    <MudSpacer></MudSpacer>
+                    <!--<MudCheckBox T="bool">Enable Notification Sounds</MudCheckBox>-->
+                    <MudTextField T="string" HelperText="Screen Name (temporary)" Style="width: 20%"></MudTextField>
+                </MudStack>
+            </div>
+        </MudPaper>
+    </MudOverlay>
+</MudBreakpointProvider>
+
+@code {
+    [Parameter]
+    public bool Visible { get; set; }
+    
+    [Parameter]
+    public ChatUser User { get; set; }
+}
