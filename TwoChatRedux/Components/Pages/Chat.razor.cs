@@ -13,6 +13,7 @@ public partial class Chat
     private ChatUser currentUser { get; set; }
     private string ui_textField { get; set; } = string.Empty;
     private bool ui_settingsVisible { get; set; } = false;
+    private ChatSettings ui_settings { get; set; } = new();
     
     protected override async Task OnInitializedAsync()
     {
@@ -55,10 +56,9 @@ public partial class Chat
         StateHasChanged();
     }
 
-    private async void OpenSettings()
+    private void OpenSettings()
     {
-        ui_settingsVisible = true;
-        StateHasChanged();
+        ui_settings.Visible = true;
     }
 
     public void State()

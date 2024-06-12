@@ -460,24 +460,25 @@
     ]
   },
   "packageFolders": {
-    "/Users/gabrielcurtiss/.nuget/packages/": {}
+    "/Users/gcurtiss/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux.API/TwoChatRedux.API.csproj",
+      "projectUniqueName": "/Users/gcurtiss/source/TwoChatRedux/TwoChatRedux.API/TwoChatRedux.API.csproj",
       "projectName": "TwoChatRedux.API",
-      "projectPath": "/Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux.API/TwoChatRedux.API.csproj",
-      "packagesPath": "/Users/gabrielcurtiss/.nuget/packages/",
-      "outputPath": "/Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux.API/obj/",
+      "projectPath": "/Users/gcurtiss/source/TwoChatRedux/TwoChatRedux.API/TwoChatRedux.API.csproj",
+      "packagesPath": "/Users/gcurtiss/.nuget/packages/",
+      "outputPath": "/Users/gcurtiss/source/TwoChatRedux/TwoChatRedux.API/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "/Users/gabrielcurtiss/.nuget/NuGet/NuGet.Config"
+        "/Users/gcurtiss/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net8.0"
       ],
       "sources": {
+        "/usr/local/share/dotnet/library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
@@ -524,7 +525,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "/Users/gabrielcurtiss/.dotnet/sdk/8.0.300/PortableRuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.201/PortableRuntimeIdentifierGraph.json"
       }
     }
   }

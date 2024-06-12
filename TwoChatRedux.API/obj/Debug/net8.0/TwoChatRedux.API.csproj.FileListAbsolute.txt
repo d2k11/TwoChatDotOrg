@@ -74,3 +74,8 @@
 /Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux.API/bin/Debug/net8.0/users/AB416C39D509E72C5A0A7451A45BC65E.json
 /Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux.API/bin/Debug/net8.0/users/E5482C6614F24995D26FBDEA369E3C72.json
 /Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux.API/bin/Debug/net8.0/users/175F8339F551EADC8BF05F412220B82B.json
+/Users/gcurtiss/source/TwoChatRedux/TwoChatRedux.API/bin/Debug/net8.0/users/175F8339F551EADC8BF05F412220B82B.json
+/Users/gcurtiss/source/TwoChatRedux/TwoChatRedux.API/bin/Debug/net8.0/users/AB416C39D509E72C5A0A7451A45BC65E.json
+/Users/gcurtiss/source/TwoChatRedux/TwoChatRedux.API/bin/Debug/net8.0/users/E5482C6614F24995D26FBDEA369E3C72.json
+/Users/gcurtiss/source/TwoChatRedux/TwoChatRedux.API/obj/Debug/net8.0/TwoChatRedux.API.sourcelink.json
+/Users/gcurtiss/source/TwoChatRedux/TwoChatRedux.API/bin/Debug/net8.0/users/4FD991CD9D25CB93806E2B4A8F9DDD91.json
