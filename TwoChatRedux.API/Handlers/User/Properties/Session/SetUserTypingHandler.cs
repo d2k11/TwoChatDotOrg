@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Text.Json;
 using AstroFramework.Objects;
 using TwoChatRedux.API.Models;
@@ -31,6 +32,7 @@ public class SetUserTypingHandler : AstroHandler
         }
 
         user.flags.typing = typing;
-        return ChatUserManager.Put(hash, user);
+        ChatUser? toReturn = ChatUserManager.Put(hash, user, true);
+        return toReturn;
     }
 }

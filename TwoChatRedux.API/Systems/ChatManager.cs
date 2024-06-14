@@ -52,9 +52,14 @@ public class ChatManager
     {
         lock (Messages)
         {
+            int id = 0;
+            if (Messages.Count != 0)
+            {
+                id = Messages.OrderByDescending(msg => msg.id).First().id + 1;
+            }
             ChatMessage msg = new()
             {
-                id = Messages.Count,
+                id = id,
                 channel = channel,
                 content = message,
                 user = user,
@@ -84,7 +89,7 @@ public class ChatManager
             }
             
             // Determine header
-            msg.header = user.session.settings.screenName != null ? 
+            msg.header = user.hash.Equals("System") ? "System" : user.session.settings.screenName != null ? 
                 user.session.settings.screenName + " (#" + user.session.id + "-"+msg.id + ")" :
                 "Anonymous #"+user.session.id+"-"+msg.id;
 
@@ -101,6 +106,7 @@ public class ChatManager
             msg.views = new() { new(user) };
             
             Messages.Add(msg);
+            if(Messages.Count() > 200) Messages.RemoveAt(0);
 
             return msg;
         }
@@ -152,5 +158,28 @@ public class ChatManager
         Messages.Remove(Get(id));
         Messages.Add(message);
         return Get(id);
+    }
+
+    public static ChatMessage SendSystemChat(string channel, string chat)
+    {
+        return Add(new ChatUser()
+        {
+            flags = new()
+            {
+                banned = new() { active = false },
+                typing = new() { active = false }
+            },
+            session = new()
+            {
+                channel = ChatChannelManager.Find(channel),
+                expiry = DateTime.Now.AddMinutes(30),
+                id = 0,
+                lastPeriodicUpdate = DateTime.Now,
+                messages = new(),
+                sessionStart = DateTime.Now,
+                settings = new()
+            },
+            hash = "System",
+        }, channel, chat);
     }
 }

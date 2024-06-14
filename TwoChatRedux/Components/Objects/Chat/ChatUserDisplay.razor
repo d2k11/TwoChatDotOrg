@@ -12,7 +12,7 @@
             </MudStack>
             <MudDivider Style="padding-bottom: 25px;"></MudDivider>
             <MudStack Spacing="1">
-                @foreach (ChatUser user in UserLoadProcess.Users)
+                @foreach (ChatUser user in UserLoadProcess.UsersByChannel[User.session.channel.name])
                 {
                     @if (user.session.settings.screenName == null)
                     {

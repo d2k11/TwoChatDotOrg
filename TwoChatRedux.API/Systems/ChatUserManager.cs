@@ -68,6 +68,11 @@ public class ChatUserManager
                 {
                     updates.Add(user);
                 }
+
+                if (remove)
+                {
+                    ChatManager.SendSystemChat(user.session.channel.name, "Anonymous #"+user.session.id+" has left the chat.");
+                }
             }
             
             lock (Users) Users = updates;
@@ -110,7 +115,7 @@ public class ChatUserManager
             File.WriteAllText("users/" + hash + ".json", JsonSerializer.Serialize(user));
         }
 
-        return Find(hash);
+        return user;
     }
 
     /// <summary>
@@ -120,7 +125,8 @@ public class ChatUserManager
     /// <returns>The associated user information</returns>
     public static ChatUser? Find(string hash)
     {
-        ChatUser? user = All(user => user.hash == hash).Count != 0 ? All(user => user.hash == hash).First() : null;
+        List<ChatUser> users = All(user => user.hash == hash);
+        ChatUser? user = users.Count != 0 ? users.First() : null;
         if (user is null)
         {
             user = File.Exists("users/"+hash+".json") ? JsonSerializer.Deserialize<ChatUser>(File.ReadAllText("users/"+hash+".json")) : null;

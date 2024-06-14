@@ -8,8 +8,50 @@
 
 @inject IHttpContextAccessor HttpContext;
 @inject ISnackbar Snackbar;
+@inject IJSRuntime Javascript;
+@inject NavigationManager Navigation;
 
 <MyMudProviders></MyMudProviders>
+
+<script>
+    
+    window.clipboardCopy = {
+        copyText: async function (textToCopy) {
+            try {
+                await copyToClipboard(textToCopy);
+            } catch(error) {
+                console.error(error);
+            }
+        }
+    }
+    
+    async function copyToClipboard(textToCopy) {
+        // Navigator clipboard api needs a secure context (https)
+        if (navigator.clipboard && window.isSecureContext) {
+            await navigator.clipboard.writeText(textToCopy);
+        } else {
+            // Use the 'out of viewport hidden text area' trick
+            const textArea = document.createElement("textarea");
+            textArea.value = textToCopy;
+
+            // Move textarea out of the viewport so it's not visible
+            textArea.style.position = "absolute";
+            textArea.style.left = "-999999px";
+
+            document.body.prepend(textArea);
+            textArea.select();
+
+            try {
+                document.execCommand('copy');
+            } catch (error) {
+                console.error(error);
+            } finally {
+                textArea.remove();
+            }
+        }
+    }
+
+</script>
 
 <style>
     .chat {
@@ -68,12 +110,14 @@
                            OnClick="@OpenChannelDisplay"></MudIconButton>
             <MudIconButton Style="margin: auto" Color="Color.Primary" Icon="@Icons.Material.Filled.People" Size="Size.Medium"
                            OnClick="@OpenUserDisplay"></MudIconButton>
+            <MudIconButton Style="margin: auto" Color="Color.Primary" Icon="@Icons.Material.Filled.Add" Size="Size.Medium"
+                           OnClick="@AddPrivateRoom"></MudIconButton>
         </MudStack>
 
         <!-- Currently Talking In -->
 
         <MudText Style="font-size: 13px; margin: auto" Class="ml-4">
-            Currently Talking In: #@channel as
+            Currently Talking In: #@(channel.StartsWith("room-") ? "private" : channel) as
             @(currentUser.session.settings.screenName == null ?
             "Anonymous #" + currentUser.session.id
             : currentUser.session.settings.screenName + " (#" + currentUser.session.id + ")")
@@ -86,12 +130,14 @@
         {
             <!-- Desktop -->
             <MudHidden Breakpoint="Breakpoint.Xs">
-                <ChatDisplay Message="@message" ViewingUser="@currentUser" Blurred="@ui_error"></ChatDisplay>
+                <ChatDisplay Message="@message" ViewingUser="@currentUser" Blurred="@ui_error" 
+                             OnCopyClicked="@HandleMessageCopy" OnMentionClicked="@HandleMention"></ChatDisplay>
             </MudHidden>
 
             <!-- Mobile -->
             <MudHidden Breakpoint="Breakpoint.SmAndUp">
-                <ChatDisplay Message="@message" ViewingUser="@currentUser" Mobile Blurred="@ui_error"></ChatDisplay>
+                <ChatDisplay Message="@message" ViewingUser="@currentUser" Mobile Blurred="@ui_error" 
+                             OnCopyClicked="@HandleMessageCopy" OnMentionClicked="@HandleMention"></ChatDisplay>
             </MudHidden>
         }
     </div>
@@ -111,8 +157,8 @@
         <MudIconButton Icon="@Icons.Material.Filled.Send" Size="Size.Medium" @onclick="@SendChat"></MudIconButton>
     </MudStack>
     <MudStack Row Style="width: 90vw;">
-        <MudText Typo="Typo.caption"><b>Typing: </b> 383912, 019282, and 234211</MudText>
-        <MudText Typo="Typo.caption">@((MarkupString)@ui_messageCounts)</MudText>
+        <MudText Typo="Typo.caption"><b>Typing: </b> @ui_typing</MudText>
+        <MudText Typo="Typo.caption">@((MarkupString)ui_messageCounts)</MudText>
     </MudStack>
 </MudBreakpointProvider>
 

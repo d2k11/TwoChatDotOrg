@@ -1,5 +1,6 @@
 @using TwoChatRedux.API.Models
 @using TwoChatRedux.API.Models.Message
+@using TwoChatRedux.API.Systems
 
 @inject ISnackbar Snackbar;
 
@@ -10,34 +11,39 @@
     }
 </style>
 
+<BanDialog User="@Message.user" @ref="@ui_banDialog"></BanDialog>
+
 @if (!Mobile)
 {
     <MudPaper Style="@Style()" Class="mt-2">
         <MudStack Row>
-            <MudAvatar Size="Size.Medium" Color="Color.Primary" Class="ml-4 mt-4">
+            <MudAvatar Size="Size.Medium" Color="@AvatarColor()" Class="ml-4 mt-4">
                 @Message.header.Substring(0, 1)
             </MudAvatar>
             <div class="d-flex flex-column ml-2">
                 <div class="d-flex" style="width: 35vw; word-wrap: anywhere">
                     <MudStack Spacing="0">
-                        <h3 class="pt-4">@Message.header</h3>
+                        <h3 class="pt-4" style="@(Message.user.flags.admin.active ? "color: red" : "")">@Message.header</h3>
                         <sub class="pb-4">@Message.timestamp</sub>
                         <p class="pb-4@(Blurred ? " blur-text" : "")">
                             @Message.content
                         </p>
                     </MudStack>
                 </div>
-                <MudStack Row Spacing="2" Class="mb-4">
-                    <MudIconButton Icon="@Icons.Material.Filled.ThumbUp" Size="Size.Small"></MudIconButton>
-                    <MudIconButton Icon="@Icons.Material.Filled.ThumbDown" Size="Size.Small"></MudIconButton>
-                    <MudIconButton Icon="@Icons.Material.Filled.ContentCopy" Size="Size.Small"></MudIconButton>
-                    <MudIconButton Icon="@Icons.Material.Filled.Announcement" Size="Size.Small"></MudIconButton>
-                    @if (ViewingUser.flags.admin.active)
-                    {
-                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Size="Size.Small" Color="@Color.Error" OnClick="@DeleteMessage"></MudIconButton>
-                    <MudIconButton Icon="@Icons.Material.Filled.Block" Size="Size.Small" Color="@Color.Error" OnClick="@BanUser"></MudIconButton>
-                    }
-                </MudStack>
+                @if (!Message.user.hash.Equals("System"))
+                {
+                    <MudStack Row Spacing="2" Class="mb-4">
+                        <MudIconButton Icon="@Icons.Material.Filled.ThumbUp" Size="Size.Small" OnClick="@HandleLikeClicked"></MudIconButton>
+                        <MudText>@Message.likes.Count</MudText>
+                        <MudIconButton Icon="@Icons.Material.Filled.ContentCopy" Size="Size.Small" OnClick="@HandleCopyClicked"></MudIconButton>
+                        <MudIconButton Icon="@Icons.Material.Filled.Announcement" Size="Size.Small" OnClick="@HandleMentionClicked"></MudIconButton>
+                        @if (ViewingUser.flags.admin.active)
+                        {
+                            <MudIconButton Icon="@Icons.Material.Filled.Delete" Size="Size.Small" Color="@Color.Error" OnClick="@DeleteMessage"></MudIconButton>
+                            <MudIconButton Icon="@Icons.Material.Filled.Block" Size="Size.Small" Color="@Color.Error" OnClick="@BanUser"></MudIconButton>
+                        }
+                    </MudStack>
+                }
             </div>
         </MudStack>
     </MudPaper>
@@ -47,22 +53,25 @@ else
     <MudPaper Style="@Style()" Class="mt-2">
         <div style="word-wrap: anywhere; width: 35vw;">
             <MudStack Spacing="0" Class="pa-2 pb-4">
-                <h4>@Message.header</h4>
+                <h4 style="@(Message.user.flags.admin.active ? "color: red" : "")">@Message.header</h4>
                 <sub>@Message.timestamp</sub>
             </MudStack>
             <p class="pa-2 pb-4@(Blurred ? " blur-text" : "")">@Message.content</p>
         </div>
-        <MudStack Row Spacing="0" Class="pa-2 pb-4">
-            <MudIconButton Icon="@Icons.Material.Filled.ThumbUp" Size="Size.Small"></MudIconButton>
-            <MudIconButton Icon="@Icons.Material.Filled.ThumbDown" Size="Size.Small"></MudIconButton>
-            <MudIconButton Icon="@Icons.Material.Filled.ContentCopy" Size="Size.Small"></MudIconButton>
-            <MudIconButton Icon="@Icons.Material.Filled.Announcement" Size="Size.Small"></MudIconButton>
-            @if (ViewingUser.flags.admin.active)
-            {
-                <MudIconButton Icon="@Icons.Material.Filled.Delete" Size="Size.Small" Color="@Color.Error"></MudIconButton>
-                <MudIconButton Icon="@Icons.Material.Filled.Block" Size="Size.Small" Color="@Color.Error"></MudIconButton>
-            }
-        </MudStack>
+        @if (Message.user.hash != "System")
+        {
+            <MudStack Row Spacing="0" Class="pa-2 pb-4">
+                <MudIconButton Icon="@Icons.Material.Filled.ThumbUp" Size="Size.Small" OnClick="@HandleLikeClicked"></MudIconButton>
+                <MudText>@Message.likes.Count</MudText>
+                <MudIconButton Icon="@Icons.Material.Filled.ContentCopy" Size="Size.Small" OnClick="@HandleCopyClicked"></MudIconButton>
+                <MudIconButton Icon="@Icons.Material.Filled.Announcement" Size="Size.Small" OnClick="@HandleMentionClicked"></MudIconButton>
+                @if (ViewingUser.flags.admin.active)
+                {
+                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Size="Size.Small" Color="@Color.Error" OnClick="@DeleteMessage"></MudIconButton>
+                    <MudIconButton Icon="@Icons.Material.Filled.Block" Size="Size.Small" Color="@Color.Error" OnClick="@BanUser"></MudIconButton>
+                }
+            </MudStack>
+        }
     </MudPaper>
 }
 
@@ -74,4 +83,29 @@ else
     [Parameter] public bool Mobile { get; set; } = false;
 
     [Parameter] public bool Blurred { get; set; } = false;
+
+    [Parameter] public EventCallback<ChatMessage> OnMentionClicked { get; set; } = new();
+
+    [Parameter] public EventCallback<ChatMessage> OnCopyClicked { get; set; } = new();
+    
+    public void HandleMentionClicked()
+    {
+        if (OnMentionClicked.HasDelegate)
+        {
+            OnMentionClicked.InvokeAsync(Message);
+        }
+    }
+
+    public void HandleCopyClicked()
+    {
+        if (OnCopyClicked.HasDelegate)
+        {
+            OnCopyClicked.InvokeAsync(Message);
+        }
+    }
+    
+    public void HandleLikeClicked()
+    {
+        ChatApiClient.AddRemoveMessageLike(ViewingUser.hash, Message);
+    }
 }

@@ -11,4 +11,9 @@ public class ChatUserBanInformation
     /// When this user's ban expires.
     /// </summary>
     public DateTime expiry { get; set; } = DateTime.Now;
+
+    /// <summary>
+    /// The reason this user was banned.
+    /// </summary>
+    public string reason { get; set; } = string.Empty;
 }

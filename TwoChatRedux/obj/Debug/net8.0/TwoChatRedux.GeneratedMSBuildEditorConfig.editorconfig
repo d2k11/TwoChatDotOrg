@@ -34,6 +34,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9NeU11ZFRoZW1lUHJvdmlkZXIucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux/Components/Objects/Admin/BanDialog.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9PYmplY3RzL0FkbWluL0JhbkRpYWxvZy5yYXpvcg==
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux/Components/Objects/Chat/ChatChannelDisplay.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9PYmplY3RzL0NoYXQvQ2hhdENoYW5uZWxEaXNwbGF5LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
@@ -52,10 +56,6 @@ build_metadata.AdditionalFiles.CssScope =
 
 [/Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux/Components/Objects/Chat/ChatUserDisplay.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9PYmplY3RzL0NoYXQvQ2hhdFVzZXJEaXNwbGF5LnJhem9y
-build_metadata.AdditionalFiles.CssScope = 
-
-[/Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux/Components/Objects/ChatSettings.razor]
-build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9PYmplY3RzL0NoYXRTZXR0aW5ncy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
 [/Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux/Components/Pages/Banned.razor]

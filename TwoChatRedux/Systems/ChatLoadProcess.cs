@@ -18,8 +18,8 @@ public class ChatLoadProcess
             {
                 lock (Chats)
                 {
-                    chats.Reverse();
-                    Chats = chats.Where(chat => chat.deleted == false).ToList();
+                    Chats = chats.Where(chat => chat.deleted == false).ToList().OrderByDescending(chat => chat.id)
+                        .ToList();
                 }
             }
 

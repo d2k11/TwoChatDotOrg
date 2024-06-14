@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System.Net;
 using System.Text;
 using System.Text.Json;
@@ -307,6 +308,42 @@ public class ChatApiClient
     }
 
     /// <summary>
+    /// Add a view to a message.
+    /// </summary>
+    /// <param name="hash">The hash of the user viewing the message.</param>
+    /// <param name="message">The message to view.</param>
+    /// <returns>The message as processed by the server.</returns>
+    public static async Task<ChatMessage> AddMessageView(string hash, ChatMessage message)
+    {
+        try
+        {
+            return JsonSerializer.Deserialize<ChatMessage>(Get($"{Path}/chat/view?hash=" + hash + "&id=" + message.id));
+        }
+        catch
+        {
+            return null;
+        }
+    }
+    
+    /// <summary>
+    /// Add a like to a message.
+    /// </summary>
+    /// <param name="hash">The hash of the user liking the message.</param>
+    /// <param name="message">The message to like.</param>
+    /// <returns>The message as processed by the server.</returns>
+    public static async Task<ChatMessage> AddRemoveMessageLike(string hash, ChatMessage message)
+    {
+        try
+        {
+            return JsonSerializer.Deserialize<ChatMessage>(Get($"{Path}/chat/like?hash=" + hash + "&id=" + message.id));
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    /// <summary>
     /// Delete a message.
     /// </summary>
     /// <param name="id">The ID of the message to delete.</param>
@@ -347,13 +384,23 @@ public class ChatApiClient
     
     private static string Get(string url)
     {
-        return new WebClient().DownloadString(url);
+        string result = new WebClient().DownloadString(url);
+        return result;
     }
     
+    private static readonly HttpClient httpClient = new HttpClient();
+
     private static async Task<string> Post(string url, string body)
     {
-        HttpResponseMessage msg = await new HttpClient().PostAsync(url, new StringContent(body, Encoding.UTF8, "application/json"));
-        string reply = await new StreamReader(await msg.Content.ReadAsStreamAsync()).ReadToEndAsync();
+        // Ensure proper content type and encoding
+        var content = new StringContent(body, Encoding.UTF8, "application/json");
+
+        // Send the POST request
+        HttpResponseMessage msg = await httpClient.PostAsync(url, content);
+        
+        // Read the response content
+        string reply = await msg.Content.ReadAsStringAsync();
+        
         return reply;
     }
 }

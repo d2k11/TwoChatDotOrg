@@ -44,11 +44,16 @@ public class ChatMessage
     /// If this message is deleted.
     /// </summary>
     public bool deleted { get; set; }
-    
+
     /// <summary>
     /// The mentions contained in this message.
     /// </summary>
-    public List<ChatUserSimple>? mentions { get; set; }
+    public List<ChatUserSimple>? mentions { get; set; } = new();
+
+    /// <summary>
+    /// The likes of this message.
+    /// </summary>
+    public List<ChatUserSimple>? likes { get; set; } = new();
     
     /// <summary>
     /// The user views of this message.

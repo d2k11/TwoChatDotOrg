@@ -29,7 +29,8 @@ public class UserSwitchChannelHandler : AstroHandler
         {
             return Fail("User is banned");
         }
-        
+
+        string oldChannel = user.session.channel.name;
         ChatChannel? chatChannel = ChatChannelManager.Find(channel);
         if (chatChannel is null)
         {
@@ -37,6 +38,14 @@ public class UserSwitchChannelHandler : AstroHandler
         }
 
         user.session.channel = chatChannel;
+        if (oldChannel != user.session.channel.name)
+        {
+            ChatManager.SendSystemChat(user.session.channel.name,
+                "Anonymous #" + user.session.id + " has joined the chat.");
+            ChatManager.SendSystemChat(oldChannel,
+                "Anonymous #" + user.session.id + " has switched channels to #" + user.session.channel.name);
+        }
+
         return ChatUserManager.Put(hash, user, true);
     }
 }

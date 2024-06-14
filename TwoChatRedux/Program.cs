@@ -34,8 +34,8 @@ while (!ChatApiClient.GetServerStatus())
 {
 }
 
-new Thread(UserLoadProcess.UserUpdateProcess).Start();
-new Thread(ChatLoadProcess.ChatUpdateProcess).Start();
-new Thread(ChannelLoadProcess.ChannelUpdateProcess).Start();
+new Task(UserLoadProcess.UserUpdateProcess).Start();
+new Task(ChatLoadProcess.ChatUpdateProcess).Start();
+new Task(ChannelLoadProcess.ChannelUpdateProcess).Start();
 
 app.Run();

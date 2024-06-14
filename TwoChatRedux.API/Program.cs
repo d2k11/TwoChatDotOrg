@@ -49,6 +49,7 @@ router.AddRoute("/v2/chat/latest", AstroHttpMethod.GET, new GetLatestChatHandler
 router.AddRoute("/v2/chat/all", AstroHttpMethod.GET, new GetAllChatsHandler());
 router.AddRoute("/v2/chat/channel", AstroHttpMethod.GET, new GetAllChannelChatsHandler());
 router.AddRoute("/v2/chat/view", AstroHttpMethod.GET, new AddViewHandler());
+router.AddRoute("/v2/chat/like", AstroHttpMethod.GET, new AddRemoveLikeHandler());
 
 // /v2/channel
 router.AddRoute("/v2/channel/get", AstroHttpMethod.GET, new GetChannelHandler());

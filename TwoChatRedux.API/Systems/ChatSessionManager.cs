@@ -8,6 +8,8 @@ public class ChatSessionManager
 
     public static ChatUserSession Add(string hash)
     {
+        int id = int.Parse(Guid.NewGuid().GetHashCode().ToString().Replace("-", "").Substring(0, 6));
+        if(Sessions.Where(user => user.id == id).Count() > 0) return Add(hash);
         ChatUserSession newSession = new()
         {
             id = int.Parse(Guid.NewGuid().GetHashCode().ToString().Replace("-", "").Substring(0, 6)),
@@ -18,6 +20,7 @@ public class ChatSessionManager
             settings = new(),
         };
         Sessions.Add(newSession);
+        ChatManager.SendSystemChat(newSession.channel.name, "Anonymous #"+newSession.id+" has joined the chat.");
         return newSession;
     }
 

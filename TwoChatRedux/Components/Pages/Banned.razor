@@ -36,7 +36,8 @@
                         <MudIcon Icon="@Icons.Material.Filled.ErrorOutline" Color="Color.Error" Style="width: 85px; height: 85px;" Class="pr-4"></MudIcon>
                         <h1 style="font-size: 55px;">you have been <a href="https://www.youtube.com/watch?v=sU-xzkQfosA">banned</a></h1>
                     </MudStack>
-                    <sub style="font-size: 12px;" class="pb-4">probably temporarily; <b>expires @ui_expiry from now.</b></sub>
+                    <sub style="font-size: 12px;">expires: <b>@ui_expiry from now.</b></sub><br/>
+                    <sub style="font-size: 12px;" class="pb-4">reason: <b>@currentUser.flags.banned.reason</b></sub>
                     <MudDivider Style="padding-top: 25px;"></MudDivider>
                     <h1>so.. @ui_banString! what now?</h1>
                     <p>it is time to take a break from the computer and touch some grass outside or possibly go on a hike
@@ -55,7 +56,8 @@
                         <MudIcon Icon="@Icons.Material.Filled.ErrorOutline" Color="Color.Error" Style="width: 85px; height: 85px;" Class="pr-4"></MudIcon>
                         <h1 style="font-size: 35px;">you have been <a href="https://www.youtube.com/watch?v=sU-xzkQfosA">banned</a></h1>
                     </MudStack>
-                    <sub style="font-size: 12px;" class="pb-4">probably temporarily; <b>expires @ui_expiry from now.</b></sub>
+                    <sub style="font-size: 12px;">expires: <b>@ui_expiry from now.</b></sub>
+                    <sub style="font-size: 12px;" class="pb-4">reason: <b>@currentUser.flags.banned.reason</b></sub>
                     <MudDivider Style="padding-top: 25px;"></MudDivider>
                     <h1>so.. @ui_banString! what now?</h1>
                     <p>it is time to take a break from the computer and touch some grass outside or possibly go on a hike
