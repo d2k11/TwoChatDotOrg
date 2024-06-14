@@ -15,12 +15,18 @@ public partial class Chat
 {
     private ChatUser? currentUser { get; set; }
     private string ui_textField { get; set; } = string.Empty;
+<<<<<<< HEAD
     private bool ui_error { get; set; } = false;
     private string ui_errorText { get; set; } = string.Empty;
     private string ui_messageCounts { get; set; } = string.Empty;
     private ChatSettings ui_settingsDisplay { get; set; } = new();
     private ChatUserDisplay ui_chatUserDisplay { get; set; } = new();    
     private ChatChannelDisplay ui_chatChannelDisplay { get; set; } = new();
+=======
+    private bool ui_settingsVisible { get; set; } = false;
+    private ChatSettings ui_settings { get; set; } = new();
+    
+>>>>>>> 408d4d70ff7ec65d86c7fc493dc95f5e107a563c
     protected override async Task OnInitializedAsync()
     {
         currentUser =
@@ -127,10 +133,14 @@ public partial class Chat
 
     private void OpenSettings()
     {
+<<<<<<< HEAD
         if (!ui_error)
         {
             ui_settingsDisplay.Visible = true;
         }
+=======
+        ui_settings.Visible = true;
+>>>>>>> 408d4d70ff7ec65d86c7fc493dc95f5e107a563c
     }
 
     private void OpenUserDisplay()

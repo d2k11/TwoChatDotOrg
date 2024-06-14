@@ -1,0 +1,48 @@
+@using TwoChatRedux.API.Models
+
+@inject ISnackbar Snackbar;
+
+<MyMudProviderss></MyMudProviderss>
+
+<MudBreakpointProvider>
+    <MudOverlay Visible="@Visible" DarkBackground Style="margin: auto">
+        <MudPaper Style="width: 75vw; height: 75vh; border: 1px solid #6200EE" Class="pa-4">
+            <div style="margin: auto">
+                <MudStack Spacing="1">
+                    <MudStack Row>
+                        <MudText Typo="Typo.h3">Settings</MudText>
+                        <MudSpacer/>
+                        <MudIconButton Icon="@Icons.Material.Filled.Close" OnClick="@Close"></MudIconButton>
+                    </MudStack>
+                    <MudText Typo="Typo.body1"><b>#@User.session.id</b></MudText>
+                    <MudSpacer></MudSpacer>
+                    <!--<MudCheckBox T="bool">Enable Notification Sounds</MudCheckBox>-->
+                    <MudStack Row Spacing="0">
+                        <p class="pr-2"><b>Screen Name </b> (temporary)</p>
+                        
+                        <!-- Desktop -->
+                        
+                        <MudHidden Breakpoint="Breakpoint.Xs">
+                            <input type="text" class="chatInput" style="width: 10%; height: 30%" @bind="ui_screenName" @bind:event="oninput"></input>
+                        </MudHidden>
+                        
+                        <!-- Mobile -->
+                        
+                        <MudHidden Breakpoint="Breakpoint.SmAndUp">
+                            <input type="text" class="chatInput" style="width: 35%; height: 30%" @bind="ui_screenName" @bind:event="oninput"></input>
+                        </MudHidden>
+                    </MudStack>
+                    <MudButton Variant="Variant.Filled" Color="Color.Primary" OnClick="@Save" Style="width: 5%" Class="pt-4">Save</MudButton>
+                </MudStack>
+            </div>
+        </MudPaper>
+    </MudOverlay>
+</MudBreakpointProvider>
+
+@code {
+    [Parameter]
+    public bool Visible { get; set; }
+    
+    [Parameter]
+    public ChatUser User { get; set; }
+}
