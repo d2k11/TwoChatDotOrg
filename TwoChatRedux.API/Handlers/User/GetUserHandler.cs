@@ -22,11 +22,6 @@ public class GetUserHandler : AstroHandler
             user = ChatUserManager.Add(Request.Query["hash"]);
         }
 
-        if (user.flags.banned.active)
-        {
-            return Fail("User is banned.");
-        }
-
         return user;
     }
 }

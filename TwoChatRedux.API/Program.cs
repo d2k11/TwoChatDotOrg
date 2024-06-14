@@ -39,6 +39,7 @@ router.AddRoute("/v2/user/messages", AstroHttpMethod.GET, new UserMessageDataHan
 router.AddRoute("/v2/user/channel", AstroHttpMethod.GET, new UserSwitchChannelHandler());
 router.AddRoute("/v2/user/ban", AstroHttpMethod.POST, new SetUserBannedHandler());
 router.AddRoute("/v2/user/typing", AstroHttpMethod.POST, new SetUserTypingHandler());
+router.AddRoute("/v2/user/admin", AstroHttpMethod.POST, new SetUserAdminHandler());
 
 // /v2/chat
 router.AddRoute("/v2/chat/get", AstroHttpMethod.GET, new GetChatHandler());

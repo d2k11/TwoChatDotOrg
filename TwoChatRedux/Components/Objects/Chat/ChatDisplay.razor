@@ -1,6 +1,15 @@
 @using TwoChatRedux.API.Models
 @using TwoChatRedux.API.Models.Message
 
+@inject ISnackbar Snackbar;
+
+<style>
+    .blur-text {
+        text-shadow: 0 0 32px white;
+        color: transparent;
+    }
+</style>
+
 @if (!Mobile)
 {
     <MudPaper Style="@Style()" Class="mt-2">
@@ -13,7 +22,7 @@
                     <MudStack Spacing="0">
                         <h3 class="pt-4">@Message.header</h3>
                         <sub class="pb-4">@Message.timestamp</sub>
-                        <p class="pb-4">
+                        <p class="pb-4@(Blurred ? " blur-text" : "")">
                             @Message.content
                         </p>
                     </MudStack>
@@ -23,6 +32,11 @@
                     <MudIconButton Icon="@Icons.Material.Filled.ThumbDown" Size="Size.Small"></MudIconButton>
                     <MudIconButton Icon="@Icons.Material.Filled.ContentCopy" Size="Size.Small"></MudIconButton>
                     <MudIconButton Icon="@Icons.Material.Filled.Announcement" Size="Size.Small"></MudIconButton>
+                    @if (ViewingUser.flags.admin.active)
+                    {
+                    <MudIconButton Icon="@Icons.Material.Filled.Delete" Size="Size.Small" Color="@Color.Error" OnClick="@DeleteMessage"></MudIconButton>
+                    <MudIconButton Icon="@Icons.Material.Filled.Block" Size="Size.Small" Color="@Color.Error" OnClick="@BanUser"></MudIconButton>
+                    }
                 </MudStack>
             </div>
         </MudStack>
@@ -36,23 +50,28 @@ else
                 <h4>@Message.header</h4>
                 <sub>@Message.timestamp</sub>
             </MudStack>
-            <p class="pa-2 pb-4">@Message.content</p>
+            <p class="pa-2 pb-4@(Blurred ? " blur-text" : "")">@Message.content</p>
         </div>
         <MudStack Row Spacing="0" Class="pa-2 pb-4">
             <MudIconButton Icon="@Icons.Material.Filled.ThumbUp" Size="Size.Small"></MudIconButton>
             <MudIconButton Icon="@Icons.Material.Filled.ThumbDown" Size="Size.Small"></MudIconButton>
             <MudIconButton Icon="@Icons.Material.Filled.ContentCopy" Size="Size.Small"></MudIconButton>
             <MudIconButton Icon="@Icons.Material.Filled.Announcement" Size="Size.Small"></MudIconButton>
+            @if (ViewingUser.flags.admin.active)
+            {
+                <MudIconButton Icon="@Icons.Material.Filled.Delete" Size="Size.Small" Color="@Color.Error"></MudIconButton>
+                <MudIconButton Icon="@Icons.Material.Filled.Block" Size="Size.Small" Color="@Color.Error"></MudIconButton>
+            }
         </MudStack>
     </MudPaper>
 }
 
 @code {
-    [Parameter]
-    public ChatMessage Message { get; set; }
-    
-    [Parameter]
-    public ChatUser ViewingUser { get; set; }
+    [Parameter] public ChatMessage Message { get; set; }
+
+    [Parameter] public ChatUser ViewingUser { get; set; }
 
     [Parameter] public bool Mobile { get; set; } = false;
+
+    [Parameter] public bool Blurred { get; set; } = false;
 }

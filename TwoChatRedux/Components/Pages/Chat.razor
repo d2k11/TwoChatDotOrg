@@ -1,4 +1,5 @@
 @page "/c/{channel}"
+@using System.Security.Cryptography
 @using TwoChatRedux.API.Models
 @using TwoChatRedux.API.Models.Message
 @using TwoChatRedux.Systems
@@ -38,9 +39,19 @@
         color: white;
         font-size: 16px;
     }
+    .watermark {
+        background-image: url('img/2chat_transparent.png');
+        background-position: center;
+        background-size: contain;
+        background-repeat: no-repeat;
+    }
 </style>
 
-<ChatSettings User="@currentUser" Visible="@ui_settingsVisible"></ChatSettings>
+<ChatSettings User="@currentUser" @ref="@ui_settingsDisplay"></ChatSettings>
+<ChatUserDisplay User="@currentUser" @ref="@ui_chatUserDisplay"></ChatUserDisplay>
+<ChatChannelDisplay User="@currentUser" @ref="@ui_chatChannelDisplay"></ChatChannelDisplay>
+
+<ChatErrorDisplay User="@currentUser" Visible="@ui_error" Message="@ui_errorText"></ChatErrorDisplay>
 
 <!-- Floating Toolbar -->
 
@@ -53,45 +64,34 @@
         <MudStack Row Style="margin: auto" Spacing="0">
             <MudIconButton Style="margin: auto" Color="Color.Primary" Icon="@Icons.Material.Filled.Settings" Size="Size.Medium"
                            OnClick="@OpenSettings"></MudIconButton>
-            <MudIconButton Style="margin: auto" Color="Color.Primary" Icon="@Icons.Material.Filled.List" Size="Size.Medium"></MudIconButton>
-            <MudIconButton Style="margin: auto" Color="Color.Primary" Icon="@Icons.Material.Filled.People" Size="Size.Medium"></MudIconButton>
+            <MudIconButton Style="margin: auto" Color="Color.Primary" Icon="@Icons.Material.Filled.List" Size="Size.Medium"
+                           OnClick="@OpenChannelDisplay"></MudIconButton>
+            <MudIconButton Style="margin: auto" Color="Color.Primary" Icon="@Icons.Material.Filled.People" Size="Size.Medium"
+                           OnClick="@OpenUserDisplay"></MudIconButton>
         </MudStack>
 
         <!-- Currently Talking In -->
 
-        <!-- Desktop -->
-        <MudHidden Breakpoint="Breakpoint.Xs">
-            <MudText Style="font-size: 14px;" Class="ml-4">
-                Currently Talking In: #@channel as
-                @(currentUser.session.settings.screenName == null ? 
-                    "Anonymous #" + currentUser.session.id 
-                    : currentUser.session.settings.screenName + " (#" + currentUser.session.id + ")")
-            </MudText>
-        </MudHidden>
-
-        <!-- Mobile -->
-        <MudHidden Breakpoint="Breakpoint.SmAndUp">
-            <MudText Style="font-size: 13px;" Class="ml-4">
-                Currently Talking In: #@channel as
-                @(currentUser.session.settings.screenName == null ?
-                    "Anonymous #" + currentUser.session.id 
-                    : currentUser.session.settings.screenName + " (#" + currentUser.session.id + ")")
-            </MudText>
-        </MudHidden>
+        <MudText Style="font-size: 13px; margin: auto" Class="ml-4">
+            Currently Talking In: #@channel as
+            @(currentUser.session.settings.screenName == null ?
+            "Anonymous #" + currentUser.session.id
+            : currentUser.session.settings.screenName + " (#" + currentUser.session.id + ")")
+        </MudText>
     </div>
     
     <!-- Chat Display -->
-    <div class="chat mb-4">
-        @foreach (ChatMessage message in ChatLoadProcess.GetChats())
+    <div class="chat mb-4 watermark">
+        @foreach (ChatMessage message in ChatLoadProcess.GetChatsInChannel(channel))
         {
             <!-- Desktop -->
             <MudHidden Breakpoint="Breakpoint.Xs">
-                <ChatDisplay Message="@message" ViewingUser="@currentUser"></ChatDisplay>
+                <ChatDisplay Message="@message" ViewingUser="@currentUser" Blurred="@ui_error"></ChatDisplay>
             </MudHidden>
 
             <!-- Mobile -->
             <MudHidden Breakpoint="Breakpoint.SmAndUp">
-                <ChatDisplay Message="@message" ViewingUser="@currentUser" Mobile></ChatDisplay>
+                <ChatDisplay Message="@message" ViewingUser="@currentUser" Mobile Blurred="@ui_error"></ChatDisplay>
             </MudHidden>
         }
     </div>
@@ -109,6 +109,10 @@
         </MudHidden>
 
         <MudIconButton Icon="@Icons.Material.Filled.Send" Size="Size.Medium" @onclick="@SendChat"></MudIconButton>
+    </MudStack>
+    <MudStack Row Style="width: 90vw;">
+        <MudText Typo="Typo.caption"><b>Typing: </b> 383912, 019282, and 234211</MudText>
+        <MudText Typo="Typo.caption">@((MarkupString)@ui_messageCounts)</MudText>
     </MudStack>
 </MudBreakpointProvider>
 

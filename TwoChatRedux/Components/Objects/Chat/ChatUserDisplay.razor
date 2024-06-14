@@ -1,0 +1,36 @@
+@using TwoChatRedux.API.Models
+@using TwoChatRedux.Systems
+
+<MudBreakpointProvider>
+    <MudOverlay DarkBackground Visible="@Visible">
+        <MudPaper Style="width: 350px; height: 75vh; border: 1px solid #6200EE;" Class="pa-4">
+            <MudStack Row>
+                <MudText Typo="Typo.h4" Style="padding-bottom: 25px;">Online Users (@UserLoadProcess.Users.Count)</MudText>
+                <MudSpacer/>
+                <MudIconButton Icon="@Icons.Material.Filled.Close" Color="Color.Primary" Size="Size.Medium"
+                               OnClick="@(() => Visible = false)"></MudIconButton>
+            </MudStack>
+            <MudDivider Style="padding-bottom: 25px;"></MudDivider>
+            <MudStack Spacing="1">
+                @foreach (ChatUser user in UserLoadProcess.Users)
+                {
+                    @if (user.session.settings.screenName == null)
+                    {
+                        <MudText Typo="Typo.h6">Anonymous #@user.session.id @(user.session.id == User.session.id ? " (You)" : "")</MudText>
+                    }
+                    else
+                    {
+                        <MudText Typo="Typo.h6">@user.session.settings.screenName (#@user.session.id @(user.session.id == User.session.id ? " (You)" : "")</MudText>
+                    }
+                }
+            </MudStack>
+        </MudPaper>
+    </MudOverlay>
+</MudBreakpointProvider>
+
+@code {
+    [Parameter]
+    public ChatUser User { get; set; }
+
+    [Parameter] public bool Visible { get; set; } = false;
+}

@@ -1,0 +1,124 @@
+@page "/banned"
+@using System.Security.Cryptography
+@using TwoChatRedux.API.Models
+@using TwoChatRedux.API.Models.Message
+@using TwoChatRedux.Systems
+
+@rendermode InteractiveServer
+
+@inject IHttpContextAccessor HttpContext;
+@inject ISnackbar Snackbar;
+
+<MyMudProviders></MyMudProviders>
+
+<style>
+    .barsBg {
+        background-image: url("img/bars.png");
+        background-size: auto;
+        background-repeat: repeat;
+        background-attachment: fixed;
+        background-position: center;
+        height: 100vh;
+        width: 100vw;
+        opacity: 50%;
+    }
+</style>
+
+<MudBreakpointProvider>
+    <div class="barsBg">
+        
+        @if (currentUser.flags.banned.active)
+        {
+            <!-- Desktop -->
+            <MudHidden Breakpoint="Breakpoint.Xs">
+                <MudPaper Style="margin: auto; width: 500px; height: 700px; border: 2px solid red;" Class="pa-4">
+                    <MudStack Row Spacing="0">
+                        <MudIcon Icon="@Icons.Material.Filled.ErrorOutline" Color="Color.Error" Style="width: 85px; height: 85px;" Class="pr-4"></MudIcon>
+                        <h1 style="font-size: 55px;">you have been <a href="https://www.youtube.com/watch?v=sU-xzkQfosA">banned</a></h1>
+                    </MudStack>
+                    <sub style="font-size: 12px;" class="pb-4">probably temporarily; <b>expires @ui_expiry from now.</b></sub>
+                    <MudDivider Style="padding-top: 25px;"></MudDivider>
+                    <h1>so.. @ui_banString! what now?</h1>
+                    <p>it is time to take a break from the computer and touch some grass outside or possibly go on a hike
+                        or other adventure off of the computer. hit the gym. do something productive and get off this god foresaken app</p><br/>
+                    <b class="pb-4">otherwise, the ban will expire when it says it expires. most are short</b><br/>
+                    <h1 class="pt-4 pb-2">what did i do? was it my @ui_phobic comment?</h1>
+                    <p>moderators are not required to provide a specific reason for their ban currently. you may appeal through
+                        the <a href="mailto:support@2chat.org">support@2chat.org</a> email. you may be banned by auto moderator for spam, nsfw imagery, illegal content, and other content.
+                        please use common sense when you post in 2chat. if you wouldn't post it on a normal forum, dont post it here. </p>
+                </MudPaper>
+            </MudHidden>
+            <!-- Mobile -->
+            <MudHidden Breakpoint="Breakpoint.SmAndUp">
+                <MudPaper Style="margin: auto; border: 2px solid red; width: 85vw; height: auto;" Class="pa-4">
+                    <MudStack Row Spacing="1">
+                        <MudIcon Icon="@Icons.Material.Filled.ErrorOutline" Color="Color.Error" Style="width: 85px; height: 85px;" Class="pr-4"></MudIcon>
+                        <h1 style="font-size: 35px;">you have been <a href="https://www.youtube.com/watch?v=sU-xzkQfosA">banned</a></h1>
+                    </MudStack>
+                    <sub style="font-size: 12px;" class="pb-4">probably temporarily; <b>expires @ui_expiry from now.</b></sub>
+                    <MudDivider Style="padding-top: 25px;"></MudDivider>
+                    <h1>so.. @ui_banString! what now?</h1>
+                    <p>it is time to take a break from the computer and touch some grass outside or possibly go on a hike
+                        or other adventure off of the computer. hit the gym. do something productive and get off this god foresaken app</p><br/>
+                    <b class="pb-4">otherwise, the ban will expire when it says it expires. most are short</b><br/>
+                    <h1 class="pt-4 pb-2">what did i do? was it my @ui_phobic comment?</h1>
+                    <p>moderators are not required to provide a specific reason for their ban currently. you may appeal through
+                        the <a href="mailto:support@2chat.org">2chat support email.</a>. you may be banned by auto moderator for spam, nsfw imagery, illegal content, and other content.
+                        please use common sense when you post in 2chat. if you wouldn't post it on a normal forum, dont post it here. </p>
+                </MudPaper>
+            </MudHidden>
+        }
+        else {
+            <!-- Desktop -->
+            <MudHidden Breakpoint="Breakpoint.Xs">
+                <MudPaper Style="margin: auto; width: 500px; height: 700px; border: 2px solid green;" Class="pa-4">
+                    <MudStack Row Spacing="0">
+                        <MudIcon Icon="@Icons.Material.Filled.ErrorOutline" Color="Color.Success" Style="width: 85px; height: 85px;" Class="pr-4"></MudIcon>
+                        <h1 style="font-size: 55px;">you are not <a href="https://www.youtube.com/watch?v=sU-xzkQfosA">banned</a></h1>
+                    </MudStack>
+                    <sub style="font-size: 12px;" class="pb-4"><b>congratulations, you are clean as soap</b></sub>
+                    <MudDivider Style="padding-top: 25px;"></MudDivider>
+                    <h1>if i make my trademark @ui_phobic comments, will i get banned?</h1>
+                    <p>depending on moderator discretion and level of extremism and intent involved in the comment we may delete
+                        comments or ban individuals based on their speech. we do not politically or otherwise discriminate but we will not tolerate
+                        dangerous or illegal content</p>
+                    <h1 class="pt-4 pb-2">what kind of content isn't allowed on 2chat?</h1>
+                    <p>this is by <b>no means</b> an exhaustive list. but it's a good start.</p><br/>
+                    <ul>
+                        <li>- spam</li>
+                        <li>- nsfw imagery (except designated channels)</li>
+                        <li>- illegal content</li>
+                        <li>- hate speech</li>
+                        <li>- extremist content</li>
+                    </ul>
+                </MudPaper>
+            </MudHidden>
+            
+            <!-- Mobile -->
+            <MudHidden Breakpoint="Breakpoint.SmAndUp">
+                <MudPaper Style="margin: auto; border: 2px solid green; width: 85vw; height: auto;" Class="pa-4">
+                    <MudStack Row Spacing="1">
+                        <MudIcon Icon="@Icons.Material.Filled.ErrorOutline" Color="Color.Success" Style="width: 85px; height: 85px;" Class="pr-4"></MudIcon>
+                        <h1 style="font-size: 35px;">you are not <a href="https://www.youtube.com/watch?v=sU-xzkQfosA">banned</a></h1>
+                    </MudStack>
+                    <sub style="font-size: 12px;" class="pb-4">congratulations, you are as clean as soap</sub>
+                    <MudDivider Style="padding-top: 25px;"></MudDivider>
+                    <h1 class="pt-4 pb-2">if i make my trademark @ui_phobic comments, will i get banned?</h1>
+                    <p>depending on moderator discretion and level of extremism and intent involved in the comment we may delete
+                        comments or ban individuals based on their speech. we do not politically or otherwise discriminate but we will not tolerate
+                        dangerous or illegal content</p>
+                    <h1 class="pt-4 pb-2">what kind of content isn't allowed on 2chat?</h1>
+                    <p>this is by <b>no means</b> an exhaustive list. but it's a good start.</p><br/>
+                    <ul>
+                        <li>- spam</li>
+                        <li>- nsfw imagery (except designated channels)</li>
+                        <li>- illegal content</li>
+                        <li>- hate speech</li>
+                        <li>- extremist content</li>
+                    </ul>
+                </MudPaper>
+            </MudHidden>
+        }
+    </div >
+        
+</MudBreakpointProvider>

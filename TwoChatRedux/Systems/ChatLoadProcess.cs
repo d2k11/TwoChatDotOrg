@@ -19,7 +19,7 @@ public class ChatLoadProcess
                 lock (Chats)
                 {
                     chats.Reverse();
-                    Chats = chats;
+                    Chats = chats.Where(chat => chat.deleted == false).ToList();
                 }
             }
 
@@ -40,5 +40,10 @@ public class ChatLoadProcess
     public static List<ChatMessage> GetChats()
     {
         return Chats is not null ? Chats : new();
+    }
+    
+    public static List<ChatMessage> GetChatsInChannel(string name)
+    {
+        return ChatsByChannel.ContainsKey(name) ? ChatsByChannel[name] : new();
     }
 }

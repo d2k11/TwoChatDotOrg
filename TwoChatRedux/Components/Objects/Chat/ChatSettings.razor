@@ -1,0 +1,38 @@
+@using TwoChatRedux.API.Models
+
+@inject ISnackbar Snackbar;
+
+<MudBreakpointProvider>
+    <MudOverlay Visible="@Visible" DarkBackground Style="margin: auto">
+        <MudPaper Style="width: 75vw; height: 75vh; border: 1px solid #6200EE" Class="pa-4">
+            <div style="margin: auto">
+                <MudStack Spacing="1">
+                    <MudStack Row>
+                        <MudText Typo="Typo.h3">Settings</MudText>
+                        <MudSpacer/>
+                        <MudIconButton Icon="@Icons.Material.Filled.Close" Color="Color.Primary" Size="Size.Medium" 
+                                       OnClick="@(() => Visible = false)"></MudIconButton>
+                    </MudStack>
+                    <MudText Typo="Typo.body1"><b>#@User.session.id</b></MudText>
+                    <MudSpacer></MudSpacer>
+                    <!--<MudCheckBox T="bool">Enable Notification Sounds</MudCheckBox>-->
+                    <MudStack Row Spacing="2" Class="py-4">
+                        <p><b>Screen Name:</b></p>
+                        <input class="chatInput" type="text" @bind:event="oninput" style="width: 200px; height: 20px;" @bind="@ui_screenName"/>
+                    </MudStack>
+                    <MudButton Variant="Variant.Outlined" Style="width: 10%" OnClick="SaveSettings">Save</MudButton>
+                </MudStack>
+            </div>
+        </MudPaper>
+    </MudOverlay>
+</MudBreakpointProvider>
+
+@code {
+    [Parameter]
+    public bool Visible { get; set; }
+    
+    [Parameter]
+    public ChatUser User { get; set; }
+    
+    public string ui_screenName { get; set; }
+}

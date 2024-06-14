@@ -1,0 +1,33 @@
+@using TwoChatRedux.API.Models
+@using TwoChatRedux.API.Models.Channel
+@using TwoChatRedux.Systems
+
+<MudBreakpointProvider>
+    <MudOverlay DarkBackground Visible="@Visible">
+        <MudPaper Style="width: 350px; height: 75vh; border: 1px solid #6200EE;" Class="pa-4">
+            <MudStack Row>
+                <MudText Typo="Typo.h4" Style="padding-bottom: 25px;">Channels</MudText>
+                <MudSpacer/>
+                <MudIconButton Icon="@Icons.Material.Filled.Close" Color="Color.Primary" Size="Size.Medium"
+                               OnClick="@(() => Visible = false)"></MudIconButton>
+            </MudStack>
+            <MudDivider Style="padding-bottom: 25px;"></MudDivider>
+            <MudStack Spacing="1">
+                @foreach (ChatChannel channel in ChannelLoadProcess.Channels.Where(channel => channel.isPublic))
+                {
+                    <a href="/c/@channel.name">
+                        <MudText Typo="Typo.h6">/c/@channel.name (@channel.display) (@(UserLoadProcess.UsersByChannel[channel.name].Count) talking)</MudText>
+                    </a>
+                }
+            </MudStack>
+        </MudPaper>
+    </MudOverlay>
+</MudBreakpointProvider>
+
+@code {
+    [Parameter]
+    public bool Visible { get; set; }
+    
+    [Parameter]
+    public ChatUser User { get; set; }
+}

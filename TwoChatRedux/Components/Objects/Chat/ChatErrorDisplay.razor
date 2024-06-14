@@ -1,0 +1,25 @@
+@using TwoChatRedux.API.Models
+
+<MudBreakpointProvider>
+    <MudOverlay Visible="@Visible" DarkBackground="true">
+        <MudPaper Style="border: 2px solid red;">
+            <div style="width: 350px; height: 50px; margin: auto">
+                <MudStack Row Spacing="0" Class="mt-4">
+                    <MudIcon Icon="@Icons.Material.Filled.Error" Color="Color.Error" Class="px-2" Size="Size.Large"></MudIcon>
+                    <MudText Typo="Typo.body2" Class="mt-2">@((MarkupString)Message)</MudText>
+                </MudStack>
+            </div>
+        </MudPaper>
+    </MudOverlay>
+</MudBreakpointProvider>
+
+@code {
+    [Parameter]
+    public ChatUser User { get; set; }
+    
+    [Parameter]
+    public bool Visible { get; set; }
+    
+    [Parameter]
+    public string Message { get; set; }
+}

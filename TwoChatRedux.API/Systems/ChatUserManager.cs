@@ -35,8 +35,7 @@ public class ChatUserManager
                     user.flags.typing.active = false;
                 }
 
-                if (user.session.expiry < DateTime.Now ||
-                    (user.flags.banned.active && user.flags.banned.expiry > DateTime.Now))
+                if (user.session.expiry < DateTime.Now)
                 {
                     remove = true;
                 }
