@@ -83,3 +83,4 @@
 /Users/gcurtiss/source/TwoChatRedux/TwoChatRedux.API/obj/Debug/net8.0/TwoChatRedux.API.sourcelink.json
 /Users/gcurtiss/source/TwoChatRedux/TwoChatRedux.API/bin/Debug/net8.0/users/4FD991CD9D25CB93806E2B4A8F9DDD91.json
 >>>>>>> 408d4d70ff7ec65d86c7fc493dc95f5e107a563c
+/Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux.API/bin/Debug/net8.0/users/4FD991CD9D25CB93806E2B4A8F9DDD91.json

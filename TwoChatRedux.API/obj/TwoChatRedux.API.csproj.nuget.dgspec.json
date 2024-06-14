@@ -1,26 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "/Users/gcurtiss/source/TwoChatRedux/TwoChatRedux.API/TwoChatRedux.API.csproj": {}
+    "/Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux.API/TwoChatRedux.API.csproj": {}
   },
   "projects": {
-    "/Users/gcurtiss/source/TwoChatRedux/TwoChatRedux.API/TwoChatRedux.API.csproj": {
+    "/Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux.API/TwoChatRedux.API.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/Users/gcurtiss/source/TwoChatRedux/TwoChatRedux.API/TwoChatRedux.API.csproj",
+        "projectUniqueName": "/Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux.API/TwoChatRedux.API.csproj",
         "projectName": "TwoChatRedux.API",
-        "projectPath": "/Users/gcurtiss/source/TwoChatRedux/TwoChatRedux.API/TwoChatRedux.API.csproj",
-        "packagesPath": "/Users/gcurtiss/.nuget/packages/",
-        "outputPath": "/Users/gcurtiss/source/TwoChatRedux/TwoChatRedux.API/obj/",
+        "projectPath": "/Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux.API/TwoChatRedux.API.csproj",
+        "packagesPath": "/Users/gabrielcurtiss/.nuget/packages/",
+        "outputPath": "/Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux.API/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/Users/gcurtiss/.nuget/NuGet/NuGet.Config"
+          "/Users/gabrielcurtiss/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "/usr/local/share/dotnet/library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -67,7 +66,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/local/share/dotnet/sdk/8.0.201/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/Users/gabrielcurtiss/.dotnet/sdk/8.0.300/PortableRuntimeIdentifierGraph.json"
         }
       }
     }

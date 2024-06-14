@@ -4,7 +4,7 @@ using TwoChatRedux.API.Systems;
 
 namespace TwoChatRedux.Components.Objects.Chat;
 
-public partial class ChatSettings
+public partial class ChatSettingsDisplay
 {
     protected override Task OnAfterRenderAsync(bool firstRender)
     {
