@@ -10,7 +10,10 @@ public partial class ChatSettingsDisplay
     {
         if (firstRender)
         {
-            ui_screenName = User.session.settings.screenName ?? string.Empty;
+            if (User is not null)
+            {
+                ui_screenName = User.session.settings.screenName ?? string.Empty;
+            }
         }
         return base.OnAfterRenderAsync(firstRender);
     }

@@ -1,5 +1,6 @@
 using AstroFramework.Models.Objects;
 using AstroFramework.Objects;
+using Microsoft.AspNetCore.HttpOverrides;
 using TwoChatRedux.API.Handlers;
 using TwoChatRedux.API.Handlers.Channel;
 using TwoChatRedux.API.Handlers.User;
@@ -13,6 +14,14 @@ var builder = WebApplication.CreateBuilder(args);
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddCors();
+
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders =
+        ForwardedHeaders.XForwardedFor | 
+        ForwardedHeaders.XForwardedProto;
+});
 
 var app = builder.Build();
 
@@ -23,7 +32,10 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+app.UseCors(x => x.AllowAnyMethod().AllowAnyHeader().AllowAnyOrigin());
+
 app.UseHttpsRedirection();
+app.UseForwardedHeaders();
 
 AstroRouter router = new(app);
 
@@ -40,6 +52,7 @@ router.AddRoute("/v2/user/channel", AstroHttpMethod.GET, new UserSwitchChannelHa
 router.AddRoute("/v2/user/ban", AstroHttpMethod.POST, new SetUserBannedHandler());
 router.AddRoute("/v2/user/typing", AstroHttpMethod.POST, new SetUserTypingHandler());
 router.AddRoute("/v2/user/admin", AstroHttpMethod.POST, new SetUserAdminHandler());
+router.AddRoute("/v2/user/ip", AstroHttpMethod.GET, new GetIpHandler());
 
 // /v2/chat
 router.AddRoute("/v2/chat/get", AstroHttpMethod.GET, new GetChatHandler());

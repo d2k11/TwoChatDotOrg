@@ -9,79 +9,79 @@ build_property.EnforceExtendedAnalyzerRules =
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = TwoChatRedux
 build_property.RootNamespace = TwoChatRedux
-build_property.ProjectDir = /Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux/
+build_property.ProjectDir = /Users/gcurtiss/source/TwoChatRedux/TwoChatRedux/
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
 build_property.RazorLangVersion = 8.0
 build_property.SupportLocalizedComponentNames = 
 build_property.GenerateRazorMetadataSourceChecksumAttributes = 
-build_property.MSBuildProjectDirectory = /Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux
+build_property.MSBuildProjectDirectory = /Users/gcurtiss/source/TwoChatRedux/TwoChatRedux
 build_property._RazorSourceGeneratorDebug = 
 
-[/Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux/Components/App.razor]
+[/Users/gcurtiss/source/TwoChatRedux/TwoChatRedux/Components/App.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9BcHAucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux/Components/Layout/NavMenu.razor]
+[/Users/gcurtiss/source/TwoChatRedux/TwoChatRedux/Components/Layout/NavMenu.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9MYXlvdXQvTmF2TWVudS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux/Components/MyMudProviders.razor]
+[/Users/gcurtiss/source/TwoChatRedux/TwoChatRedux/Components/MyMudProviders.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9NeU11ZFByb3ZpZGVycy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux/Components/MyMudThemeProvider.razor]
+[/Users/gcurtiss/source/TwoChatRedux/TwoChatRedux/Components/MyMudThemeProvider.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9NeU11ZFRoZW1lUHJvdmlkZXIucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux/Components/Objects/Admin/BanDialog.razor]
+[/Users/gcurtiss/source/TwoChatRedux/TwoChatRedux/Components/Objects/Admin/BanDialog.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9PYmplY3RzL0FkbWluL0JhbkRpYWxvZy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux/Components/Objects/Chat/ChatChannelDisplay.razor]
+[/Users/gcurtiss/source/TwoChatRedux/TwoChatRedux/Components/Objects/Chat/ChatChannelDisplay.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9PYmplY3RzL0NoYXQvQ2hhdENoYW5uZWxEaXNwbGF5LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux/Components/Objects/Chat/ChatDisplay.razor]
+[/Users/gcurtiss/source/TwoChatRedux/TwoChatRedux/Components/Objects/Chat/ChatDisplay.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9PYmplY3RzL0NoYXQvQ2hhdERpc3BsYXkucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux/Components/Objects/Chat/ChatErrorDisplay.razor]
+[/Users/gcurtiss/source/TwoChatRedux/TwoChatRedux/Components/Objects/Chat/ChatErrorDisplay.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9PYmplY3RzL0NoYXQvQ2hhdEVycm9yRGlzcGxheS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux/Components/Objects/Chat/ChatSettingsDisplay.razor]
+[/Users/gcurtiss/source/TwoChatRedux/TwoChatRedux/Components/Objects/Chat/ChatSettingsDisplay.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9PYmplY3RzL0NoYXQvQ2hhdFNldHRpbmdzRGlzcGxheS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux/Components/Objects/Chat/ChatUserDisplay.razor]
+[/Users/gcurtiss/source/TwoChatRedux/TwoChatRedux/Components/Objects/Chat/ChatUserDisplay.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9PYmplY3RzL0NoYXQvQ2hhdFVzZXJEaXNwbGF5LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux/Components/Pages/Banned.razor]
+[/Users/gcurtiss/source/TwoChatRedux/TwoChatRedux/Components/Pages/Banned.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9CYW5uZWQucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux/Components/Pages/Chat.razor]
+[/Users/gcurtiss/source/TwoChatRedux/TwoChatRedux/Components/Pages/Chat.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9DaGF0LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux/Components/Pages/Error.razor]
+[/Users/gcurtiss/source/TwoChatRedux/TwoChatRedux/Components/Pages/Error.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9FcnJvci5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux/Components/Pages/Home.razor]
+[/Users/gcurtiss/source/TwoChatRedux/TwoChatRedux/Components/Pages/Home.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9QYWdlcy9Ib21lLnJhem9y
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux/Components/Routes.razor]
+[/Users/gcurtiss/source/TwoChatRedux/TwoChatRedux/Components/Routes.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9Sb3V0ZXMucmF6b3I=
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux/Components/_Imports.razor]
+[/Users/gcurtiss/source/TwoChatRedux/TwoChatRedux/Components/_Imports.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9fSW1wb3J0cy5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
-[/Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux/Components/Layout/MainLayout.razor]
+[/Users/gcurtiss/source/TwoChatRedux/TwoChatRedux/Components/Layout/MainLayout.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9MYXlvdXQvTWFpbkxheW91dC5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = b-ep08gp8clm

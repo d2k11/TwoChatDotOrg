@@ -2,6 +2,8 @@
 @using TwoChatRedux.API.Models.Channel
 @using TwoChatRedux.Systems
 
+@inject NavigationManager NavigationManager;
+
 <MudBreakpointProvider>
     <MudOverlay DarkBackground Visible="@Visible">
         <MudPaper Style="width: 350px; height: 75vh; border: 1px solid #6200EE;" Class="pa-4">
@@ -15,9 +17,7 @@
             <MudStack Spacing="1">
                 @foreach (ChatChannel channel in ChannelLoadProcess.Channels.Where(channel => channel.isPublic))
                 {
-                    <a href="/c/@channel.name">
-                        <MudText Typo="Typo.h6">/c/@channel.name (@channel.display) (@(UserLoadProcess.UsersByChannel[channel.name].Count) talking)</MudText>
-                    </a>
+                    <MudLink OnClick="@(() => NavigateToChannel(channel.name))" Typo="Typo.h6">/c/@channel.name (@channel.display) (@(UserLoadProcess.UsersByChannel[channel.name].Count) talking)</MudLink>
                 }
             </MudStack>
         </MudPaper>
@@ -30,4 +30,9 @@
     
     [Parameter]
     public ChatUser User { get; set; }
+    
+    public void NavigateToChannel(string channelName)
+    {
+        NavigationManager.NavigateTo($"/c/{channelName}");
+    }
 }

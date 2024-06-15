@@ -15,7 +15,7 @@ public class ChatApiClient
     /// <summary>
     /// The path to the API server.
     /// </summary>
-    public static string Path { get; set; } = "http://localhost:5555/v2";
+    public static string Path { get; set; } = "http://localhost:5000/v2";
     
     /// <summary>
     /// Get the status of the API server.

@@ -3,6 +3,16 @@
 
 <MyMudThemeProvider/>
 
+<script>
+  window.getIpAddress = () => {
+    return fetch('https://api.2chat.org/v2/user/ip')
+      .then((response) => response.json())
+      .then((data) => {
+        return data.ip
+      })
+  }
+</script>
+
 <div class="page mud-layout" />
 <main>
     <MudContainer MaxWidth="MaxWidth.ExtraExtraLarge" Class="my-2 pt-4">

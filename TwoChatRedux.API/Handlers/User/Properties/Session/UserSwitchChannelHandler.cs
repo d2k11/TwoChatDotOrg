@@ -42,8 +42,16 @@ public class UserSwitchChannelHandler : AstroHandler
         {
             ChatManager.SendSystemChat(user.session.channel.name,
                 "Anonymous #" + user.session.id + " has joined the chat.");
-            ChatManager.SendSystemChat(oldChannel,
-                "Anonymous #" + user.session.id + " has switched channels to #" + user.session.channel.name);
+            if (user.session.channel.isPublic)
+            {
+                ChatManager.SendSystemChat(oldChannel,
+                    "Anonymous #" + user.session.id + " has switched channels to #" + user.session.channel.name);
+            }
+            else
+            {
+                ChatManager.SendSystemChat(oldChannel,
+                    "Anonymous #" + user.session.id + " has switched channels to a private room.");
+            }
         }
 
         return ChatUserManager.Put(hash, user, true);

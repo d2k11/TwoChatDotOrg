@@ -1,5 +1,6 @@
 @page "/c/{channel}"
 @using System.Security.Cryptography
+@using Microsoft.AspNetCore.Components.Endpoints
 @using TwoChatRedux.API.Models
 @using TwoChatRedux.API.Models.Message
 @using TwoChatRedux.Systems
@@ -10,6 +11,7 @@
 @inject ISnackbar Snackbar;
 @inject IJSRuntime Javascript;
 @inject NavigationManager Navigation;
+@inject PersistentComponentState ComponentState;
 
 <MyMudProviders></MyMudProviders>
 
@@ -97,70 +99,79 @@
 
 <!-- Floating Toolbar -->
 
-<MudBreakpointProvider>
-    <!-- Floating Toolbar -->
-    <div class="toolbar">
+@if (currentUser is not null)
+{
+    <MudBreakpointProvider>
+        <!-- Floating Toolbar -->
+        <div class="toolbar">
 
-        <!-- Navigation Icons -->
+            <!-- Navigation Icons -->
 
-        <MudStack Row Style="margin: auto" Spacing="0">
-            <MudIconButton Style="margin: auto" Color="Color.Primary" Icon="@Icons.Material.Filled.Settings" Size="Size.Medium"
-                           OnClick="@OpenSettings"></MudIconButton>
-            <MudIconButton Style="margin: auto" Color="Color.Primary" Icon="@Icons.Material.Filled.List" Size="Size.Medium"
-                           OnClick="@OpenChannelDisplay"></MudIconButton>
-            <MudIconButton Style="margin: auto" Color="Color.Primary" Icon="@Icons.Material.Filled.People" Size="Size.Medium"
-                           OnClick="@OpenUserDisplay"></MudIconButton>
-            <MudIconButton Style="margin: auto" Color="Color.Primary" Icon="@Icons.Material.Filled.Add" Size="Size.Medium"
-                           OnClick="@AddPrivateRoom"></MudIconButton>
-        </MudStack>
+            <MudStack Row Style="margin: auto" Spacing="0">
+                <MudIconButton Style="margin: auto" Color="Color.Primary" Icon="@Icons.Material.Filled.Settings" Size="Size.Medium"
+                               OnClick="@OpenSettings"></MudIconButton>
+                <MudIconButton Style="margin: auto" Color="Color.Primary" Icon="@Icons.Material.Filled.List" Size="Size.Medium"
+                               OnClick="@OpenChannelDisplay"></MudIconButton>
+                <MudIconButton Style="margin: auto" Color="Color.Primary" Icon="@Icons.Material.Filled.People" Size="Size.Medium"
+                               OnClick="@OpenUserDisplay"></MudIconButton>
+                <MudIconButton Style="margin: auto" Color="Color.Primary" Icon="@Icons.Material.Filled.Add" Size="Size.Medium"
+                               OnClick="@AddPrivateRoom"></MudIconButton>
+            </MudStack>
 
-        <!-- Currently Talking In -->
+            <!-- Currently Talking In -->
 
-        <MudText Style="font-size: 13px; margin: auto" Class="ml-4">
-            Currently Talking In: #@(channel.StartsWith("room-") ? "private" : channel) as
-            @(currentUser.session.settings.screenName == null ?
-            "Anonymous #" + currentUser.session.id
-            : currentUser.session.settings.screenName + " (#" + currentUser.session.id + ")")
-        </MudText>
-    </div>
-    
-    <!-- Chat Display -->
-    <div class="chat mb-4 watermark">
-        @foreach (ChatMessage message in ChatLoadProcess.GetChatsInChannel(channel))
-        {
+            <MudText Style="font-size: 13px; margin: auto" Class="ml-4">
+                Currently Talking In: #@(channel.StartsWith("room-") ? "private" : channel) as
+                @(currentUser.session.settings.screenName == null
+                    ? "Anonymous #" + currentUser.session.id
+                    : currentUser.session.settings.screenName + " (#" + currentUser.session.id + ")")
+            </MudText>
+        </div>
+
+        <!-- Chat Display -->
+        <div class="chat mb-4 watermark">
+            @foreach (ChatMessage message in ChatLoadProcess.GetChatsInChannel(channel))
+            {
+                <!-- Desktop -->
+                <MudHidden Breakpoint="Breakpoint.Xs">
+                    <ChatDisplay Message="@message" ViewingUser="@currentUser" Blurred="@ui_error"
+                                 OnCopyClicked="@HandleMessageCopy" OnMentionClicked="@HandleMention"></ChatDisplay>
+                </MudHidden>
+
+                <!-- Mobile -->
+                <MudHidden Breakpoint="Breakpoint.SmAndUp">
+                    <ChatDisplay Message="@message" ViewingUser="@currentUser" Mobile Blurred="@ui_error"
+                                 OnCopyClicked="@HandleMessageCopy" OnMentionClicked="@HandleMention"></ChatDisplay>
+                </MudHidden>
+            }
+        </div>
+        <!-- Chat Input -->
+        <MudStack Row>
+
             <!-- Desktop -->
             <MudHidden Breakpoint="Breakpoint.Xs">
-                <ChatDisplay Message="@message" ViewingUser="@currentUser" Blurred="@ui_error" 
-                             OnCopyClicked="@HandleMessageCopy" OnMentionClicked="@HandleMention"></ChatDisplay>
+                <textarea type="text" class="chatInput" style="width: 93vw;" @bind="ui_textField" @bind:event="oninput" @onkeydown="@TextFieldKeyDown"></textarea>
             </MudHidden>
 
             <!-- Mobile -->
             <MudHidden Breakpoint="Breakpoint.SmAndUp">
-                <ChatDisplay Message="@message" ViewingUser="@currentUser" Mobile Blurred="@ui_error" 
-                             OnCopyClicked="@HandleMessageCopy" OnMentionClicked="@HandleMention"></ChatDisplay>
+                <textarea type="text" class="chatInput" @bind="ui_textField" @bind:event="oninput" @onkeydown="@TextFieldKeyDown"></textarea>
             </MudHidden>
-        }
-    </div>
-    <!-- Chat Input -->
-    <MudStack Row>
 
-        <!-- Desktop -->
-        <MudHidden Breakpoint="Breakpoint.Xs">
-            <textarea type="text" class="chatInput" style="width: 93vw;" @bind="ui_textField" @bind:event="oninput" @onkeydown="@TextFieldKeyDown"></textarea>
-        </MudHidden>
-
-        <!-- Mobile -->
-        <MudHidden Breakpoint="Breakpoint.SmAndUp">
-            <textarea type="text" class="chatInput" @bind="ui_textField" @bind:event="oninput" @onkeydown="@TextFieldKeyDown"></textarea>
-        </MudHidden>
-
-        <MudIconButton Icon="@Icons.Material.Filled.Send" Size="Size.Medium" @onclick="@SendChat"></MudIconButton>
-    </MudStack>
-    <MudStack Row Style="width: 90vw;">
-        <MudText Typo="Typo.caption"><b>Typing: </b> @ui_typing</MudText>
-        <MudText Typo="Typo.caption">@((MarkupString)ui_messageCounts)</MudText>
-    </MudStack>
-</MudBreakpointProvider>
+            <MudIconButton Icon="@Icons.Material.Filled.Send" Size="Size.Medium" @onclick="@SendChat"></MudIconButton>
+        </MudStack>
+        <MudStack Row Style="width: 90vw;">
+            <MudText Typo="Typo.caption"><b>Typing: </b> @ui_typing</MudText>
+            <MudText Typo="Typo.caption">@((MarkupString)ui_messageCounts)</MudText>
+        </MudStack>
+    </MudBreakpointProvider>
+}
+else
+{
+    <MudOverlay Visible DarkBackground>
+        <h1>Loading...</h1>
+    </MudOverlay>
+}
 
 
 @code {

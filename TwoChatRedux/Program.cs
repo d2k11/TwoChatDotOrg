@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.HttpOverrides;
 using TwoChatRedux.Components;
 using MudBlazor.Services;
 using TwoChatRedux.API.Systems;
@@ -11,6 +12,13 @@ builder.Services.AddRazorComponents()
 
 builder.Services.AddMudServices();
 builder.Services.AddHttpContextAccessor();
+
+builder.Services.Configure<ForwardedHeadersOptions>(options =>
+{
+    options.ForwardedHeaders =
+        ForwardedHeaders.XForwardedFor | 
+        ForwardedHeaders.XForwardedProto;
+});
 
 var app = builder.Build();
 
@@ -26,6 +34,7 @@ app.UseHttpsRedirection();
 
 app.UseStaticFiles();
 app.UseAntiforgery();
+app.UseForwardedHeaders();
 
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();

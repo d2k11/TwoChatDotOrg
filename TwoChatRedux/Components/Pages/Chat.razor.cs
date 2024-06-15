@@ -1,4 +1,5 @@
 using Ganss.Xss;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 using MudBlazor;
@@ -23,21 +24,38 @@ public partial class Chat
     private ChatSettingsDisplay ui_settingsDisplay { get; set; } = new();
     private ChatUserDisplay ui_chatUserDisplay { get; set; } = new();    
     private ChatChannelDisplay ui_chatChannelDisplay { get; set; } = new();
+    private PersistingComponentStateSubscription persistenceSub { get; set; }
     protected override async Task OnInitializedAsync()
     {
-        currentUser =
-            ChatApiClient.GetUser(ChatApiClient.GetHash(HttpContext.HttpContext.Connection.RemoteIpAddress.ToString()));
-        
-        new Task(State).Start();
-        
 
-        ChatApiClient.SetChannel(currentUser.hash, channel);
+    }
+    
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            currentUser =
+                ChatApiClient.GetUser(
+                    ChatApiClient.GetHash(await Javascript.InvokeAsync<string>("getIpAddress").ConfigureAwait(true)));
+            
+            if (currentUser != null)
+            {
+                new Task(State).Start();
+                ChatApiClient.SetChannel(currentUser.hash, channel);
+            }
+        }
+        await base.OnAfterRenderAsync(firstRender);
     }
     
     public async void State()
     {
         while (true)
         {
+            if (currentUser is null)
+            {
+                await Task.Delay(1000);
+                continue;
+            }
             IEnumerable<ChatUser> users = UserLoadProcess.Users.Where(user => user.hash == currentUser.hash);
             if (users.Count() == 0)
             {

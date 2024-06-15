@@ -5,6 +5,7 @@
 @rendermode InteractiveServer
 @inject NavigationManager NavigationManager
 @inject IHttpContextAccessor HttpContext
+@inject PersistentComponentState ComponentState;
 
 <MudPaper Style="margin: auto; width: 500px; height: 100px;">
     <MudStack Row Spacing="0">
@@ -17,11 +18,21 @@
 
     public int counter { get; set; } = 5;
     public ChatUser currentUser { get; set; }
+    public PersistingComponentStateSubscription persistenceSub { get; set; }
 
     protected override Task OnInitializedAsync()
     {
-        currentUser = ChatApiClient.GetUser(ChatApiClient.GetHash(HttpContext.HttpContext.Connection.RemoteIpAddress.ToString()));
+        persistenceSub = ComponentState.RegisterOnPersisting(PersistUserInfo);
+        
+        if (ComponentState.TryTakeFromJson<ChatUser>("user", out var ipResult)) currentUser = ipResult;
+        else currentUser = ChatApiClient.GetUser(ChatApiClient.GetHash(HttpContext.HttpContext.Connection.RemoteIpAddress.ToString()));
+        
         return base.OnInitializedAsync();
+    }
+    
+    public async Task PersistUserInfo()
+    {
+        ComponentState.PersistAsJson("user", currentUser);
     }
 
     protected override Task OnAfterRenderAsync(bool firstRender)
