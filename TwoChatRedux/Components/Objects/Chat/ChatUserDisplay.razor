@@ -5,14 +5,14 @@
     <MudOverlay DarkBackground Visible="@Visible">
         <MudPaper Style="width: 350px; height: 75vh; border: 1px solid #6200EE;" Class="pa-4">
             <MudStack Row>
-                <MudText Typo="Typo.h4" Style="padding-bottom: 25px;">Online Users (@UserLoadProcess.Users.Count)</MudText>
+                <MudText Typo="Typo.h4" Style="padding-bottom: 25px;">Online Users (@UserLoadProcess.UsersByChannel[User.session.channel.name].Where(user => user.session.expiry > DateTime.Now && !user.flags.banned.active).Count())</MudText>
                 <MudSpacer/>
                 <MudIconButton Icon="@Icons.Material.Filled.Close" Color="Color.Primary" Size="Size.Medium"
                                OnClick="@(() => Visible = false)"></MudIconButton>
             </MudStack>
             <MudDivider Style="padding-bottom: 25px;"></MudDivider>
             <MudStack Spacing="1">
-                @foreach (ChatUser user in UserLoadProcess.UsersByChannel[User.session.channel.name])
+                @foreach (ChatUser user in UserLoadProcess.UsersByChannel[User.session.channel.name].Where(user => user.session.expiry > DateTime.Now && !user.flags.banned.active))
                 {
                     @if (user.session.settings.screenName == null)
                     {

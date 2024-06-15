@@ -47,6 +47,8 @@ router.AddRoute("/v2/user/all", AstroHttpMethod.GET, new GetAllUsersHandler());
 router.AddRoute("/v2/user/hash", AstroHttpMethod.GET, new GetHashHandler());
 router.AddRoute("/v2/user/set", AstroHttpMethod.POST, new PutUserSettingsHandler());
 router.AddRoute("/v2/user/session", AstroHttpMethod.POST, new PutSessionSettingsHandler());
+router.AddRoute("/v2/user/bump", AstroHttpMethod.GET, new BumpSessionHandler());
+router.AddRoute("/v2/user/kill", AstroHttpMethod.GET, new KillSessionHandler());
 router.AddRoute("/v2/user/messages", AstroHttpMethod.GET, new UserMessageDataHandler());
 router.AddRoute("/v2/user/channel", AstroHttpMethod.GET, new UserSwitchChannelHandler());
 router.AddRoute("/v2/user/ban", AstroHttpMethod.POST, new SetUserBannedHandler());

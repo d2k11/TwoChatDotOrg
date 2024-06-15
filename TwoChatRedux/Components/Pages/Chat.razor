@@ -116,6 +116,8 @@
                                OnClick="@OpenUserDisplay"></MudIconButton>
                 <MudIconButton Style="margin: auto" Color="Color.Primary" Icon="@Icons.Material.Filled.Add" Size="Size.Medium"
                                OnClick="@AddPrivateRoom"></MudIconButton>
+                <MudIconButton Style="margin: auto" Color="Color.Error" Icon="@Icons.Material.Filled.ExitToApp" Size="Size.Medium"
+                               OnClick="@LeaveChat"></MudIconButton>
             </MudStack>
 
             <!-- Currently Talking In -->
@@ -130,19 +132,22 @@
 
         <!-- Chat Display -->
         <div class="chat mb-4 watermark">
-            @foreach (ChatMessage message in ChatLoadProcess.GetChatsInChannel(channel))
+            @if (!ui_error)
             {
-                <!-- Desktop -->
-                <MudHidden Breakpoint="Breakpoint.Xs">
-                    <ChatDisplay Message="@message" ViewingUser="@currentUser" Blurred="@ui_error"
-                                 OnCopyClicked="@HandleMessageCopy" OnMentionClicked="@HandleMention"></ChatDisplay>
-                </MudHidden>
+                @foreach (ChatMessage message in ChatLoadProcess.GetChatsInChannel(channel))
+                {
+                    <!-- Desktop -->
+                    <MudHidden Breakpoint="Breakpoint.Xs">
+                        <ChatDisplay Message="@message" ViewingUser="@currentUser" Blurred="@ui_error"
+                                     OnCopyClicked="@HandleMessageCopy" OnMentionClicked="@HandleMention"></ChatDisplay>
+                    </MudHidden>
 
-                <!-- Mobile -->
-                <MudHidden Breakpoint="Breakpoint.SmAndUp">
-                    <ChatDisplay Message="@message" ViewingUser="@currentUser" Mobile Blurred="@ui_error"
-                                 OnCopyClicked="@HandleMessageCopy" OnMentionClicked="@HandleMention"></ChatDisplay>
-                </MudHidden>
+                    <!-- Mobile -->
+                    <MudHidden Breakpoint="Breakpoint.SmAndUp">
+                        <ChatDisplay Message="@message" ViewingUser="@currentUser" Mobile Blurred="@ui_error"
+                                     OnCopyClicked="@HandleMessageCopy" OnMentionClicked="@HandleMention"></ChatDisplay>
+                    </MudHidden>
+                }
             }
         </div>
         <!-- Chat Input -->

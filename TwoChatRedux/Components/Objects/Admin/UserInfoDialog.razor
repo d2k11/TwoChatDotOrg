@@ -5,23 +5,24 @@
 
 <MudBreakpointProvider>
     <MudOverlay DarkBackground Visible="@Visible">
-        <MudPaper Style="width: 350px; height: 75vh; border: 2px solid red;" Class="pa-4">
+        <MudPaper Style="width: 350px; height: 75vh; border: 2px solid #6200EE;" Class="pa-4">
             <MudStack Row Spacing="1" Style="padding-bottom: 25px;">
-                <MudIcon Icon="@Icons.Material.Filled.Block" Color="Color.Error" Style="width: 65px; height: 65px;" Class="pr-4"></MudIcon>
-                <h1 style="font-size: 35px; margin: auto;"><a href="https://www.youtube.com/watch?v=sU-xzkQfosA">ban</a> user</h1>
+                <MudIcon Icon="@Icons.Material.Filled.Person" Color="Color.Primary" Style="width: 65px; height: 65px;" Class="pr-4"></MudIcon>
+                <h1 style="font-size: 35px; margin: auto;">user info</h1>
                 <MudSpacer/>
-                <MudIconButton Icon="@Icons.Material.Filled.Close" Color="Color.Error" OnClick="@Close"></MudIconButton>
+                <MudIconButton Icon="@Icons.Material.Filled.Close" Color="Color.Primary" OnClick="@Close"></MudIconButton>
             </MudStack>
             <MudDivider Style="padding-bottom: 25px;"></MudDivider>
             <div style="border: 1px solid white;" class="pa-4">
                 <sub><b>User Information</b></sub><br/>
                 <sub>@(User.session.settings.screenName == null ? "Anonymous #" + User.session.id : User.session.settings.screenName + " (#" + User.session.id + ")")</sub>
-                <sub class="pb-4"><i>@User.hash</i></sub>
-                <MudDivider Class="pb-4"></MudDivider>
+                <sub><i>@User.hash</i></sub><br/>
                 <sub><b>Banned: </b> @User.flags.banned.active</sub><br/>
                 <sub><b>Admin: </b> @User.flags.admin.active</sub><br/>
                 <sub><b>Session Total Msg: </b> @User.session.messages.sent_session</sub><br/>
-                <sub><b>Session Start: </b> @User.session.sessionStart</sub>
+                <sub><b>Session Start: </b> @User.session.sessionStart</sub><br/>
+                <sub><b>Session End: </b> @User.session.expiry</sub><br/>
+                <sub><b>Current System Time: </b> @DateTime.Now</sub>
             </div>
             <MudStack Row Spacing="2" Class="pt-4 pb-2">
                 <p><b>Ban Expiry Date:</b></p>
@@ -32,8 +33,10 @@
                 <input class="chatInput" type="text" @bind:event="oninput" style="width: 200px; height: 20px;" @bind="@ui_reason"/>
             </MudStack>
             <MudStack Row>
-                <MudButton Variant="Variant.Outlined" Color="Color.Error" OnClick="@BanUser" Disabled="@(string.IsNullOrEmpty(ui_expiry) || string.IsNullOrEmpty(ui_reason))">Ban User</MudButton>
-                <MudButton Variant="Variant.Outlined" Color="Color.Success" OnClick="@UnbanUser">Unban User</MudButton>
+                <MudButton Variant="Variant.Outlined" Color="Color.Error" OnClick="@BanUser" Disabled="@(string.IsNullOrEmpty(ui_expiry) || string.IsNullOrEmpty(ui_reason) || User.flags.banned.active)">Ban User</MudButton>
+                <MudButton Variant="Variant.Outlined" Color="Color.Info" OnClick="@UnbanUser" Disabled="@(!User.flags.banned.active)">Unban User</MudButton>
+                <MudButton Variant="Variant.Outlined" Color="Color.Info" OnClick="@Promote" Disabled="@(User.flags.admin.active)">Promote User</MudButton>
+                <MudButton Variant="Variant.Outlined" Color="Color.Info" OnClick="@Demote" Disabled="@(!User.flags.admin.active)">Demote User</MudButton>
             </MudStack>
         </MudPaper>
     </MudOverlay>
@@ -42,10 +45,10 @@
 @code {
     [Parameter]
     public bool Visible { get; set; } = false;
-    
+
     [Parameter]
     public ChatUser User { get; set; }
-    
+
     private string ui_expiry { get; set; } = "";
     private string ui_reason { get; set; } = "";
 
@@ -57,11 +60,24 @@
     public void BanUser()
     {
         ChatApiClient.Ban(User.hash, new() { active = true, expiry = DateTime.Parse(ui_expiry), reason = ui_reason });
+        Snackbar.Add("User has been banned", Severity.Success);
     }
 
     public void UnbanUser()
     {
         ChatApiClient.Ban(User.hash, new() { active = false });
         Snackbar.Add("User has been unbanned", Severity.Success);
+    }
+
+    public void Promote()
+    {
+        ChatApiClient.Promote(User.hash, new() { active = true });
+        Snackbar.Add("User has been promoted to admin", Severity.Success);
+    }
+
+    public void Demote()
+    {
+        ChatApiClient.Promote(User.hash, new() { active = false });
+        Snackbar.Add("User has been demoted from admin", Severity.Success);
     }
 }

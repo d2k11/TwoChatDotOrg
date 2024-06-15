@@ -41,7 +41,21 @@ public class ChatChannelManager
             name = "tech",
             display = "technology",
             isPublic = true
-        }
+        },
+        new()
+        {
+            id = 5,
+            name = "meta",
+            display = "meta",
+            isPublic = true
+        },
+        new()
+        {
+            id = 6,
+            name = "admin",
+            display = "administration",
+            isPublic = false
+        },
     };
 
     /// <summary>

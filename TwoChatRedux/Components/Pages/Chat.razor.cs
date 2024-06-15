@@ -25,10 +25,6 @@ public partial class Chat
     private ChatUserDisplay ui_chatUserDisplay { get; set; } = new();    
     private ChatChannelDisplay ui_chatChannelDisplay { get; set; } = new();
     private PersistingComponentStateSubscription persistenceSub { get; set; }
-    protected override async Task OnInitializedAsync()
-    {
-
-    }
     
     protected override async Task OnAfterRenderAsync(bool firstRender)
     {
@@ -41,7 +37,20 @@ public partial class Chat
             if (currentUser != null)
             {
                 new Task(State).Start();
-                ChatApiClient.SetChannel(currentUser.hash, channel);
+                if (!ChannelLoadProcess.Channels.Where(chnnl => chnnl.name == channel).Any())
+                {
+                    ui_error = true;
+                    ui_errorText = "Channel not found.";
+                }
+                else if (channel == "admin" && !currentUser.flags.admin.active)
+                {
+                    ui_error = true;
+                    ui_errorText = "Access denied.";
+                }
+                else
+                {
+                    ChatApiClient.SetChannel(currentUser.hash, channel);
+                }
             }
         }
         await base.OnAfterRenderAsync(firstRender);
@@ -49,7 +58,7 @@ public partial class Chat
     
     public async void State()
     {
-        while (true)
+        while (!ui_error)
         {
             if (currentUser is null)
             {
@@ -112,7 +121,7 @@ public partial class Chat
                 ui_typing = "None";
             }
 
-            await Task.Delay(1000);
+            await Task.Delay(100);
             InvokeAsync(StateHasChanged);
         }
     }
@@ -137,12 +146,19 @@ public partial class Chat
             Snackbar.Add("you sneaky snake, no cheating!", Severity.Error);
             return;
         }
-        ui_textField = new HtmlSanitizer().Sanitize(ui_textField);
+        string text = new HtmlSanitizer().Sanitize(ui_textField);
         channel = channel.ToLower();
         
         if (string.IsNullOrWhiteSpace(ui_textField) || ui_textField.Length > 512)
         {
             Snackbar.Add("Message must be between 1 and 512 characters.", Severity.Error);
+            return;
+        }
+
+        if (text == "/hash")
+        {
+            ui_textField = currentUser.hash;
+            StateHasChanged();
             return;
         }
 
@@ -152,14 +168,17 @@ public partial class Chat
         ChatMessage? message = await ChatApiClient.SendMessage(currentUser.hash, new()
         {
             user = currentUser,
-            content = ui_textField,
+            content = text,
             channel = channel
         });
         
         if (message is null)
         {
             Snackbar.Add("Failed to send message.", Severity.Error);
+            return;
         }
+
+        ChatApiClient.BumpSession(currentUser.hash);
 
         if (currentUser.session.messages.sent_second > 5)
         {
@@ -169,14 +188,14 @@ public partial class Chat
         {
             ChatApiClient.Ban(currentUser.hash, new() { active = true, expiry = DateTime.Now.AddHours(1), reason = "[AutoMod] Spam limit exceeded for 1m" });
         }
-        if(currentUser.session.messages.sent_hour > 100)
+        if(currentUser.session.messages.sent_hour > 250)
         {
             ChatApiClient.Ban(currentUser.hash, new() { active = true, expiry = DateTime.Now.AddHours(24), reason = "[AutoMod] Spam limit exceeded for 1h" });
         }
         
         int remainSecond = 5 - currentUser.session.messages.sent_second;
         int remainMinute = 30 - currentUser.session.messages.sent_minute;
-        int remainHour = 100 - currentUser.session.messages.sent_hour;
+        int remainHour = 250 - currentUser.session.messages.sent_hour;
         ui_messageCounts = remainSecond > 0 ? "<b style=\"color: green\">" + remainSecond + "</b> / " : "<b style=\"color: red\">"+remainSecond+"</b> / ";
         ui_messageCounts += remainMinute > 0 ? "<b style=\"color: green\">" + remainMinute + "</b> / " : "<b style=\"color: red\">"+remainMinute+"</b> / ";
         ui_messageCounts += remainHour > 0 ? "<b style=\"color: green\">" + remainHour + "</b>" : "<b style=\"color: red\">"+remainHour+"</b>";
@@ -223,6 +242,12 @@ public partial class Chat
         Snackbar.Add("Room created: " + room.name+". Copied URL to clipboard.", Severity.Success);
         CopyToClipboard("https://2chat.org/c/"+room.name);
         Navigation.NavigateTo("/c/"+room.name);
+    }
+
+    private async void LeaveChat()
+    {
+        await ChatApiClient.KillSession(currentUser.hash);
+        Navigation.NavigateTo("/goodbye");
     }
 
     private void HandleMessageCopy(ChatMessage message)

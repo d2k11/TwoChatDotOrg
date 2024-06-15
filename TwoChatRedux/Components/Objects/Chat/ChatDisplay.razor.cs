@@ -7,7 +7,7 @@ namespace TwoChatRedux.Components.Objects.Chat;
 
 public partial class ChatDisplay
 {
-    private BanDialog ui_banDialog { get; set; } 
+    private UserInfoDialog ui_userInfoDialog { get; set; } 
     protected override async Task OnInitializedAsync()
     {
         ChatApiClient.AddMessageView(ViewingUser.hash, Message);
@@ -23,7 +23,7 @@ public partial class ChatDisplay
         string css = "";
         if (self)
         {
-            css += "margin-left: 55%; background-color: #6200EE; color: white;";
+            css += "margin-left: 55%; background: linear-gradient(180deg, rgba(2,0,36,1) 0%, rgba(98,0,238,1) 0%, rgba(180,56,255,1) 100%); color: white;";
         }
         else
         {
@@ -58,6 +58,16 @@ public partial class ChatDisplay
         return Color.Primary;
     }
 
+    public Color ThumbsUpColor()
+    {
+        if(Message.likes.Where(user => user.id == ViewingUser.session.id).Any())
+        {
+            return Color.Primary;
+        }
+
+        return Color.Default;
+    }
+
     public void DeleteMessage()
     {
         if (ViewingUser.flags.admin.active)
@@ -67,22 +77,8 @@ public partial class ChatDisplay
         }
     }
 
-    public void BanUser()
+    public void ShowUserInfo()
     {
-        if (ViewingUser.flags.admin.active)
-        {
-            if (Message.user.hash == ViewingUser.hash)
-            {
-                Snackbar.Add("You cannot ban yourself.", Severity.Error);
-                return;
-            }
-            // TODO: ban dialog
-            /*
-            ChatApiClient.Ban(Message.user.hash,
-                new ChatUserBanInformation() { active = true, expiry = DateTime.Now.AddHours(1) });
-            Snackbar.Add("User banned.", Severity.Success);
-            */
-            ui_banDialog.Visible = true;
-        }
+        ui_userInfoDialog.Visible = true;
     }
 }

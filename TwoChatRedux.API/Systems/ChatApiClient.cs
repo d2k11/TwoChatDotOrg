@@ -115,6 +115,40 @@ public class ChatApiClient
     }
 
     /// <summary>
+    /// End a user session.
+    /// </summary>
+    /// <param name="hash">The hash of the user whose session is being ended.</param>
+    /// <returns>The user as processed by the server.</returns>
+    public static async Task<ChatUser?> KillSession(string hash)
+    {
+        try
+        {
+            return JsonSerializer.Deserialize<ChatUser>(Get($"{Path}/user/kill?hash={hash}"));
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// Reset a user session to the max time remaining.
+    /// </summary>
+    /// <param name="hash">The hash of the user to bump.</param>
+    /// <returns>The user as processed by the server.</returns>
+    public static async Task<ChatUser?> BumpSession(string hash)
+    {
+        try
+        {
+            return JsonSerializer.Deserialize<ChatUser>(Get($"{Path}/user/bump?hash={hash}"));
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    /// <summary>
     /// Ban a user.
     /// </summary>
     /// <param name="hash">The hash of the user to ban.</param>
@@ -126,6 +160,25 @@ public class ChatApiClient
         {
             return JsonSerializer.Deserialize<ChatUser>(await Post($"{Path}/user/ban?hash={hash}",
                 JsonSerializer.Serialize(info)));
+        }
+        catch
+        {
+            return null;
+        }
+    }
+
+    /// <summary>
+    /// Promote a user to administrator.
+    /// </summary>
+    /// <param name="hash">The hash of the user to promote.</param>
+    /// <param name="state">The state to promote them with.</param>
+    /// <returns>The user as processed by the server.</returns>
+    public static async Task<ChatUser?> Promote(string hash, ChatUserAdminState state)
+    {
+        try
+        {
+            return JsonSerializer.Deserialize<ChatUser>(await Post($"{Path}/user/admin?hash={hash}",
+                JsonSerializer.Serialize(state)));
         }
         catch
         {

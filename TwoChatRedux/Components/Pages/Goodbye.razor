@@ -1,0 +1,50 @@
+@page "/goodbye"
+@using System.Security.Cryptography
+@using TwoChatRedux.API.Models
+@using TwoChatRedux.API.Models.Message
+@using TwoChatRedux.Systems
+
+@rendermode InteractiveServer
+
+@inject IHttpContextAccessor HttpContext;
+@inject ISnackbar Snackbar;
+
+<MyMudProviders></MyMudProviders>
+
+<style>
+    .bg {
+        height: 100vh;
+        width: 100vw;
+        opacity: 50%;
+    }
+</style>
+
+<meta http-equiv="refresh" content="3;URL='https://google.com/'" />
+
+<MudBreakpointProvider>
+    <div class="bg">
+        <!-- Desktop -->
+        <MudHidden Breakpoint="Breakpoint.Xs">
+            <MudPaper Style="margin: auto; width: 500px; height: 300px; border: 2px solid green;" Class="pa-4">
+                <MudStack Row Spacing="0">
+                    <MudIcon Icon="@Icons.Material.Filled.ExitToApp" Color="Color.Success" Style="width: 85px; height: 85px;" Class="pr-4"></MudIcon>
+                    <h1 style="font-size: 55px;">goodbye!</h1>
+                </MudStack>
+                <p>we hope you had a good time! now go touch some grass, champ!</p>
+                <sub>redirecting you to google</sub>
+            </MudPaper>
+        </MudHidden>
+        <!-- Mobile -->
+        <MudHidden Breakpoint="Breakpoint.SmAndUp">
+            <MudPaper Style="margin: auto; border: 2px solid green; width: 85vw; height: auto;" Class="pa-4">
+                <MudStack Row Spacing="1">
+                    <MudIcon Icon="@Icons.Material.Filled.ExitToApp" Color="Color.Success" Style="width: 85px; height: 85px;" Class="pr-4"></MudIcon>
+                    <h1 style="font-size: 35px;">goodbye!</h1>
+                </MudStack>
+                <p>we hope you had a good time! now go touch some grass, champ!</p>
+                <sub>redirecting you to google</sub>
+            </MudPaper>
+        </MudHidden>
+    </div >
+
+</MudBreakpointProvider>

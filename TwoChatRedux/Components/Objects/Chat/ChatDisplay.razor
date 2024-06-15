@@ -11,7 +11,7 @@
     }
 </style>
 
-<BanDialog User="@Message.user" @ref="@ui_banDialog"></BanDialog>
+<UserInfoDialog User="@Message.user" @ref="@ui_userInfoDialog"></UserInfoDialog>
 
 @if (!Mobile)
 {
@@ -33,14 +33,14 @@
                 @if (!Message.user.hash.Equals("System"))
                 {
                     <MudStack Row Spacing="2" Class="mb-4">
-                        <MudIconButton Icon="@Icons.Material.Filled.ThumbUp" Size="Size.Small" OnClick="@HandleLikeClicked"></MudIconButton>
+                        <MudIconButton Icon="@Icons.Material.Filled.ThumbUp" Color="@ThumbsUpColor()" Size="Size.Small" OnClick="@HandleLikeClicked"></MudIconButton>
                         <MudText>@Message.likes.Count</MudText>
                         <MudIconButton Icon="@Icons.Material.Filled.ContentCopy" Size="Size.Small" OnClick="@HandleCopyClicked"></MudIconButton>
-                        <MudIconButton Icon="@Icons.Material.Filled.Announcement" Size="Size.Small" OnClick="@HandleMentionClicked"></MudIconButton>
+                        <MudIconButton Icon="@Icons.Material.Filled.Reply" Size="Size.Small" OnClick="@HandleMentionClicked"></MudIconButton>
                         @if (ViewingUser.flags.admin.active)
                         {
                             <MudIconButton Icon="@Icons.Material.Filled.Delete" Size="Size.Small" Color="@Color.Error" OnClick="@DeleteMessage"></MudIconButton>
-                            <MudIconButton Icon="@Icons.Material.Filled.Block" Size="Size.Small" Color="@Color.Error" OnClick="@BanUser"></MudIconButton>
+                            <MudIconButton Icon="@Icons.Material.Filled.Person" Size="Size.Small" Color="@Color.Error" OnClick="@ShowUserInfo"></MudIconButton>
                         }
                     </MudStack>
                 }
@@ -61,14 +61,14 @@ else
         @if (Message.user.hash != "System")
         {
             <MudStack Row Spacing="0" Class="pa-2 pb-4">
-                <MudIconButton Icon="@Icons.Material.Filled.ThumbUp" Size="Size.Small" OnClick="@HandleLikeClicked"></MudIconButton>
+                <MudIconButton Icon="@Icons.Material.Filled.ThumbUp" Color="@ThumbsUpColor()" Size="Size.Small" OnClick="@HandleLikeClicked"></MudIconButton>
                 <MudText>@Message.likes.Count</MudText>
                 <MudIconButton Icon="@Icons.Material.Filled.ContentCopy" Size="Size.Small" OnClick="@HandleCopyClicked"></MudIconButton>
-                <MudIconButton Icon="@Icons.Material.Filled.Announcement" Size="Size.Small" OnClick="@HandleMentionClicked"></MudIconButton>
+                <MudIconButton Icon="@Icons.Material.Filled.Reply" Size="Size.Small" OnClick="@HandleMentionClicked"></MudIconButton>
                 @if (ViewingUser.flags.admin.active)
                 {
                     <MudIconButton Icon="@Icons.Material.Filled.Delete" Size="Size.Small" Color="@Color.Error" OnClick="@DeleteMessage"></MudIconButton>
-                    <MudIconButton Icon="@Icons.Material.Filled.Block" Size="Size.Small" Color="@Color.Error" OnClick="@BanUser"></MudIconButton>
+                    <MudIconButton Icon="@Icons.Material.Filled.Person" Size="Size.Small" Color="@Color.Error" OnClick="@ShowUserInfo"></MudIconButton>
                 }
             </MudStack>
         }
