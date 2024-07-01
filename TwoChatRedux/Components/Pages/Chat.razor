@@ -94,6 +94,7 @@
 <ChatSettingsDisplay User="@currentUser" @ref="@ui_settingsDisplay"></ChatSettingsDisplay>
 <ChatUserDisplay User="@currentUser" @ref="@ui_chatUserDisplay"></ChatUserDisplay>
 <ChatChannelDisplay User="@currentUser" @ref="@ui_chatChannelDisplay"></ChatChannelDisplay>
+<ChatUploadFile User="@currentUser" @ref="@ui_uploadFile"></ChatUploadFile>
 
 <ChatErrorDisplay User="@currentUser" Visible="@ui_error" Message="@ui_errorText"></ChatErrorDisplay>
 
@@ -163,6 +164,7 @@
                 <textarea type="text" class="chatInput" @bind="ui_textField" @bind:event="oninput" @onkeydown="@TextFieldKeyDown"></textarea>
             </MudHidden>
 
+            <MudIconButton Icon="@Icons.Material.Filled.Attachment" Size="Size.Medium" @onclick="@OpenFileDialog" Color="@(ui_uploadFile.Image == string.Empty ? Color.Default : Color.Primary)"></MudIconButton>
             <MudIconButton Icon="@Icons.Material.Filled.Send" Size="Size.Medium" @onclick="@SendChat"></MudIconButton>
         </MudStack>
         <MudStack Row Style="width: 90vw;">

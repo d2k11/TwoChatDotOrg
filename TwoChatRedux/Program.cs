@@ -39,6 +39,7 @@ app.UseForwardedHeaders();
 app.MapRazorComponents<App>()
     .AddInteractiveServerRenderMode();
 
+
 while (!ChatApiClient.GetServerStatus())
 {
 }

@@ -21,9 +21,11 @@ public partial class Chat
     private string ui_errorText { get; set; } = string.Empty;
     private string ui_typing { get; set; } = string.Empty;
     private string ui_messageCounts { get; set; } = string.Empty;
+    private string ui_image { get; set; } = string.Empty;
     private ChatSettingsDisplay ui_settingsDisplay { get; set; } = new();
     private ChatUserDisplay ui_chatUserDisplay { get; set; } = new();    
     private ChatChannelDisplay ui_chatChannelDisplay { get; set; } = new();
+    private ChatUploadFile ui_uploadFile { get; set; } = new();
     private PersistingComponentStateSubscription persistenceSub { get; set; }
     
     protected override async Task OnAfterRenderAsync(bool firstRender)
@@ -149,7 +151,7 @@ public partial class Chat
         string text = new HtmlSanitizer().Sanitize(ui_textField);
         channel = channel.ToLower();
         
-        if (string.IsNullOrWhiteSpace(ui_textField) || ui_textField.Length > 512)
+        if ((string.IsNullOrWhiteSpace(ui_textField) && ui_uploadFile.Image == string.Empty) || ui_textField.Length > 512)
         {
             Snackbar.Add("Message must be between 1 and 512 characters.", Severity.Error);
             return;
@@ -168,7 +170,7 @@ public partial class Chat
         ChatMessage? message = await ChatApiClient.SendMessage(currentUser.hash, new()
         {
             user = currentUser,
-            content = text,
+            content = (ui_uploadFile.Image == string.Empty ? null : "[img]"+ui_uploadFile.Image+"[/img] ") + text,
             channel = channel
         });
         
@@ -201,6 +203,7 @@ public partial class Chat
         ui_messageCounts += remainHour > 0 ? "<b style=\"color: green\">" + remainHour + "</b>" : "<b style=\"color: red\">"+remainHour+"</b>";
 
         ui_textField = string.Empty;
+        ui_uploadFile.Image = string.Empty;
         StateHasChanged();
     }
 
@@ -265,5 +268,10 @@ public partial class Chat
     private async void CopyToClipboard(string copy)
     {
         await Javascript.InvokeVoidAsync("clipboardCopy.copyText", copy);
+    }
+
+    private async void OpenFileDialog()
+    {
+        ui_uploadFile.Visible = true;
     }
 }

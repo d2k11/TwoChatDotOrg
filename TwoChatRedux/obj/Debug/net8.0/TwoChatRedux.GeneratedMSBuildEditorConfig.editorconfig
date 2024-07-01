@@ -54,6 +54,10 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9PYmplY3RzL0NoYXQvQ2hhdFNldHRpbmdzRGlzcGxheS5yYXpvcg==
 build_metadata.AdditionalFiles.CssScope = 
 
+[/Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux/Components/Objects/Chat/ChatUploadFile.razor]
+build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9PYmplY3RzL0NoYXQvQ2hhdFVwbG9hZEZpbGUucmF6b3I=
+build_metadata.AdditionalFiles.CssScope = 
+
 [/Users/gabrielcurtiss/source/TwoChatDotOrg/TwoChatRedux/Components/Objects/Chat/ChatUserDisplay.razor]
 build_metadata.AdditionalFiles.TargetPath = Q29tcG9uZW50cy9PYmplY3RzL0NoYXQvQ2hhdFVzZXJEaXNwbGF5LnJhem9y
 build_metadata.AdditionalFiles.CssScope = 

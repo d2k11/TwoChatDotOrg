@@ -31,7 +31,7 @@ public class BumpSessionHandler : AstroHandler
             return Fail("Session has already expired.");
         }
         
-        user.session.expiry = DateTime.Now.AddMinutes(30);
+        user.session.expiry = DateTime.Now.AddMinutes(5);
         return ChatUserManager.Put(Request.Query["hash"], user, true);
     }
 }

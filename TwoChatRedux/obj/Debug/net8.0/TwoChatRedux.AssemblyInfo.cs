@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("TwoChatRedux")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+71459ec17a11fbb7509d8355d8f478a5cae48d9c")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f0c50f7c10dd33e8d0ffe68fec08d47237be05a2")]
 [assembly: System.Reflection.AssemblyProductAttribute("TwoChatRedux")]
 [assembly: System.Reflection.AssemblyTitleAttribute("TwoChatRedux")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

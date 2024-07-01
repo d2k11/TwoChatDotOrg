@@ -106,7 +106,6 @@ public class ChatManager
             msg.views = new() { new(user) };
             
             Messages.Add(msg);
-            if(Messages.Count() > 200) Messages.RemoveAt(0);
 
             return msg;
         }
